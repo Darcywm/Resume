@@ -1,6 +1,7 @@
 package org.productstore.model.entity.custom;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,15 +9,17 @@ import java.util.Map;
  */
 public class Cart {
 
-    private Map<Integer,CartItem> cartItems = new HashMap<>();
+    private Map<Integer,List<CartItem>> cartItems = new HashMap<>();
 
     private double total;
 
-    public Map<Integer, CartItem> getCartItems() {
+    private String storeId;
+
+    public Map<Integer,List<CartItem>> getCartItems() {
         return cartItems;
     }
 
-    public void setCartItems(Map<Integer, CartItem> cartItems) {
+    public void setCartItems(Map<Integer, List<CartItem>> cartItems) {
         this.cartItems = cartItems;
     }
 
@@ -26,5 +29,13 @@ public class Cart {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
     }
 }

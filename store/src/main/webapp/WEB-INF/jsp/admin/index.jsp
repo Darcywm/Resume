@@ -202,6 +202,57 @@
                             </div>
                         </shiro:hasPermission>
                     </li>
+                    <li class="sort_li">
+                        <shiro:hasPermission name="store-manage">
+                            <div class="panel panel-default left-menu-main-list">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapseFour">
+                                            <span class="glyphicon glyphicon-asterisk"></span>我的收款码
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseFour" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+
+                                            <li>
+                                                <a href="admin/store/${sessionScope.loginStore.storeId}" target="centerFrame">微信</a>
+                                            </li>
+                                            <li>
+                                                <a href="admin/store/list?page=1" target="centerFrame">支付宝</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="panel panel-default left-menu-main-list">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapseFive">
+                                            <span class="glyphicon glyphicon-list-alt"></span> 报表统计
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseFive" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li>
+                                                <a href="admin/report/views" target="centerFrame">访问量</a>
+                                            </li>
+                                            <li>
+                                                <a href="admin/report/sales" target="centerFrame">销售量</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </shiro:hasPermission>
+                    </li>
                 </c:if>
                 <li class="sort_li">
                     <shiro:hasPermission name="personal-center">

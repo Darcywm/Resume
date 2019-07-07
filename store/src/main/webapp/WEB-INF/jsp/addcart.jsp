@@ -29,7 +29,7 @@
             </div>
             <div class="things">
                 <span>${productInfo.name}</span>
-                <span>x${cart.cartItems[productInfo.productId].buyNum}</span>
+                <span>x${buyNum}</span>
             </div>
 
         </c:if>

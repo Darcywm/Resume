@@ -38,11 +38,12 @@ public class PayController {
 
         List<ProductInfo> products = orderDetailService.findProductsByOrderId(order.getOrderId());
 
-        PayContext payContext = new PayContext();
+        /*PayContext payContext = new PayContext();
         payContext.setResponse(response);
         payContext.setOrders(order);
-        payContext.setProductInfos(products);
+        payContext.setProductInfos(products);*/
 
+        /*
         try {
             alipay.pay(payContext);
         } catch (Exception e) {
@@ -51,6 +52,8 @@ public class PayController {
             return "exception";
         }
         return "pay_success";
+        */
+        return "saoma";
     }
 
     @RequestMapping("/return")

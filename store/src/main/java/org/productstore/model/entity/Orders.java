@@ -19,6 +19,12 @@ public class Orders {
     private Integer userId;
 
     /**
+     * 用户id
+     */
+    @Column(name = "store_id")
+    private Integer storeId;
+
+    /**
      * 实付金额。精确到2位小数;单位:元。如:200.07，表示:200元7分
      */
     @Column(name = "payment")
@@ -115,6 +121,14 @@ public class Orders {
      */
     public void setOrderId(String orderId) {
         this.orderId = orderId == null ? null : orderId.trim();
+    }
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
     }
 
     /**

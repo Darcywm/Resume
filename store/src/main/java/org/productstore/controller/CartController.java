@@ -48,6 +48,7 @@ public class CartController {
             BSResult bsResult = cartService.addToCart(productInfo, cart, buyNum);
             request.getSession().setAttribute("cart", bsResult.getData());
             request.setAttribute("productInfo", productInfo);
+            request.setAttribute("buyNum", buyNum);
         } else {
             //数据库里没有这本书,或库存不足
             request.setAttribute("productInfo", null);
@@ -82,8 +83,8 @@ public class CartController {
 
     @PostMapping("/checkOne")
     @ResponseBody
-    public BSResult checkACartItem(int bookId,HttpServletRequest request){
+    public BSResult checkACartItem(int productId,HttpServletRequest request){
         Cart cart = (Cart)request.getSession().getAttribute("cart");
-        return cartService.checkedOrNot(cart, bookId);
+        return cartService.checkedOrNot(cart, productId);
     }
 }

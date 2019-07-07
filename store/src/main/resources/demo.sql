@@ -77,6 +77,7 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `order_id` varchar(60) CHARACTER SET utf8 NOT NULL COMMENT '订单id',
   `user_id` int(20) DEFAULT NULL COMMENT '用户id',
+  `store_id` int(16) DEFAULT NULL COMMENT '店铺id',
   `payment` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '实付金额。精确到2位小数;单位:元。如:200.07，表示:200元7分',
   `payment_type` int(2) DEFAULT NULL COMMENT '支付类型，1、微信，2、支付宝',
   `status` int(5) NOT NULL COMMENT '状态：0、未付款，1、已付款，2、未发货，3、已发货，4、交易成功，5、交易关闭',

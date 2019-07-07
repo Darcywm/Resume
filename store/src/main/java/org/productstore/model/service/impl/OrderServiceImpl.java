@@ -21,10 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
@@ -77,60 +74,70 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     @Transactional
     public BSResult createOrder(Cart cart, User user, String express, int payMethod) {
-        Map<Integer, CartItem> cartItems = cart.getCartItems();
+        Map<Integer, List<CartItem>>  cartItemMap=cart.getCartItems();
 
-        if(cartItems.size() > 0){
-            Orders order = new Orders();
-            String orderId = IDUtils.genOrderId();
-            order.setOrderId(orderId);
-            order.setUserId(user.getUserId());
-            order.setCreateTime(new Date());
-            order.setUpdateTime(new Date());
-            order.setBuyerRate(NOT_COMPLETED);
-            order.setShippingName(express);
-            order.setOrderMount(cartItems.size());
-            order.setPayment(String.format("%.2f", cart.getTotal()));
-            order.setPaymentType(payMethod);
-            order.setStatus(NOT_COMPLETED);
-            order.setBuyerRate(NOT_COMPLETED);
-            order.setPostFee("0.00");//邮费
-            orderMapper.insert(order);
+        List<Orders> orders =new ArrayList<>();
+        if(cartItemMap.size() > 0) {
+            for (Map.Entry<Integer, List<CartItem>> cartItemM : cartItemMap.entrySet()) {
+                List<CartItem> cartItemList = cartItemM.getValue();
+                double payment = 0.0;
+                for(int i = 0; i< cartItemList.size();i++){
+                    payment+=cartItemList.get(i).getSubTotal();
+                }
+                Orders order = new Orders();
+                String orderId = IDUtils.genOrderId();
+                order.setOrderId(orderId);
+                order.setUserId(user.getUserId());
+                order.setStoreId(cartItemM.getKey());
+                order.setCreateTime(new Date());
+                order.setUpdateTime(new Date());
+                order.setBuyerRate(NOT_COMPLETED);
+                order.setShippingName(express);
+                order.setOrderMount(cartItemM.getValue().size());
+                order.setPayment(String.format("%.2f", payment));
+                order.setPaymentType(payMethod);
+                order.setStatus(NOT_COMPLETED);
+                order.setBuyerRate(NOT_COMPLETED);
+                order.setPostFee("0.00");//邮费
+                orderMapper.insert(order);
+                orders.add(order);
 
-            OrderShipping orderShipping = new OrderShipping();
-            orderShipping.setOrderId(orderId);
-            orderShipping.setCreated(new Date());
-            orderShipping.setUpdated(new Date());
-            orderShipping.setReceiverAddress(user.getDetailAddress());
-            orderShipping.setReceiverMobile(user.getPhone());
-            orderShipping.setReceiverName(user.getUsername());
-            orderShipping.setReceiverZip(user.getZipCode());
-            orderShipping.setReceiverState("广东");
-            orderShipping.setReceiverCity("广州");
-            orderShipping.setReceiverDistrict("海珠区");
-            orderShippingMapper.insert(orderShipping);
+                OrderShipping orderShipping = new OrderShipping();
+                orderShipping.setOrderId(orderId);
+                orderShipping.setCreated(new Date());
+                orderShipping.setUpdated(new Date());
+                orderShipping.setReceiverAddress(user.getDetailAddress());
+                orderShipping.setReceiverMobile(user.getPhone());
+                orderShipping.setReceiverName(user.getUsername());
+                orderShipping.setReceiverZip(user.getZipCode());
+                //orderShipping.setReceiverState("广东");
+                //orderShipping.setReceiverCity("广州");
+                //orderShipping.setReceiverDistrict("海珠区");
+                orderShippingMapper.insert(orderShipping);
 
-            List<OrderDetail> orderDetails = new ArrayList<>();
-            for (Map.Entry<Integer, CartItem> cartItemEntry : cartItems.entrySet()) {
-
-                CartItem cartItem = cartItemEntry.getValue();
-                if (cartItem.getBuyNum() > 0 && cartItem.isChecked()) {
-                    OrderDetail orderDetail = new OrderDetail();
-                    orderDetail.setOrderId(orderId);
-                    orderDetail.setProductId(cartItemEntry.getKey());
-                    orderDetail.setMount(cartItem.getBuyNum());
-                    orderDetail.setOrderNumber(orderId);
-                    orderDetail.setPostStatus(NOT_COMPLETED + "");
-                    orderDetail.setReceiveStatus(NOT_COMPLETED + "");
-                    orderDetail.setStoreId(cartItem.getProductInfo().getStoreId());
-                    orderDetail.setTotalPrice(BigDecimal.valueOf(cartItem.getSubTotal()));
-                    orderDetail.setUnitPrice(cartItem.getProductInfo().getPrice());
-                    orderDetail.setImageUrl(cartItem.getProductInfo().getImageUrl());
-                    orderDetail.setProductName(cartItem.getProductInfo().getName());
-                    orderDetails.add(orderDetail);
-                    orderDetailMapper.insert(orderDetail);
+                List<OrderDetail> orderDetails = new ArrayList<>();
+                if(cartItemList!=null&&cartItemList.size()> 0){
+                    for(CartItem cartItem:cartItemList){
+                        if (cartItem.getBuyNum() > 0 && cartItem.isChecked()) {
+                            OrderDetail orderDetail = new OrderDetail();
+                            orderDetail.setOrderId(orderId);
+                            orderDetail.setProductId(cartItem.getProductInfo().getProductId());
+                            orderDetail.setMount(cartItem.getBuyNum());
+                            orderDetail.setOrderNumber(orderId);
+                            orderDetail.setPostStatus(NOT_COMPLETED + "");
+                            orderDetail.setReceiveStatus(NOT_COMPLETED + "");
+                            orderDetail.setStoreId(cartItem.getProductInfo().getStoreId());
+                            orderDetail.setTotalPrice(BigDecimal.valueOf(cartItem.getSubTotal()));
+                            orderDetail.setUnitPrice(cartItem.getProductInfo().getPrice());
+                            orderDetail.setImageUrl(cartItem.getProductInfo().getImageUrl());
+                            orderDetail.setProductName(cartItem.getProductInfo().getName());
+                            orderDetails.add(orderDetail);
+                            orderDetailMapper.insert(orderDetail);
+                        }
+                    }
                 }
             }
-            return BSResultUtil.success(order);
+            return BSResultUtil.success(orders);
         }else
             return BSResultUtil.build(400, "没有选中的购物项，创建订单失败!");
     }

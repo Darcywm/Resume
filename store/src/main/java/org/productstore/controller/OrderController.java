@@ -2,6 +2,7 @@ package org.productstore.controller;
 
 import org.productstore.common.pojo.BSResult;
 import org.productstore.exception.BSException;
+import org.productstore.model.entity.Orders;
 import org.productstore.model.entity.ProductInfo;
 import org.productstore.model.entity.custom.Cart;
 import org.productstore.model.entity.custom.OrderCustom;
@@ -53,7 +54,7 @@ public class OrderController {
                 request.setAttribute("cart", bsResult.getData());
                 return "order_info";
             } else {
-                request.setAttribute("exception", "不好意思，书籍库存不足或不存在了！");
+                request.setAttribute("exception", "不好意思，库存不足或不存在了！");
                 return "exception";
             }
         }
@@ -74,7 +75,7 @@ public class OrderController {
         BSResult bsResult = orderService.findOrderById(orderId);
 
         if (bsResult.getCode() == 200) {
-            model.addAttribute("order", bsResult.getData());
+            model.addAttribute("orders", bsResult.getData());
             return "payment";
         }
         return "exception";
@@ -127,7 +128,7 @@ public class OrderController {
             BSResult bsResult = orderService.createOrder(buyNowCart, userDTO, express, payMethod);
 
             if (bsResult.getCode() == 200) {
-                request.setAttribute("order", bsResult.getData());
+                request.setAttribute("orders", bsResult.getData());
                 cartService.clearCart(request, "buyNowCart");
                 return "payment";
             } else {
@@ -142,7 +143,7 @@ public class OrderController {
             BSResult bsResult = orderService.createOrder(cart, userDTO, express, payMethod);
 
             if (bsResult.getCode() == 200) {
-                request.setAttribute("order", bsResult.getData());
+                request.setAttribute("orders", bsResult.getData());
                 cartService.clearCart(request, "cart");
                 return "payment";
             } else {

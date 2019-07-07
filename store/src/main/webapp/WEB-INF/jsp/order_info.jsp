@@ -86,29 +86,30 @@
                 </thead>
 
                 <c:forEach items="${cart.cartItems}" var="cartItem">
-                <c:if test="${cartItem.value.buyNum > 0 && cartItem.value.subTotal > 0}">
+                <c:forEach items="${cartItem.value}" var="item">
+                <c:if test="${item.buyNum > 0 && item.subTotal > 0}">
 
-                <tbody>
+
                 <tr class="order_item">
                     <td>
-                        <a href="#"><img src="${cartItem.value.productInfo.imageUrl}" width="20%"/></a>
-                        <span>${cartItem.value.productInfo.name}</span>
+                        <a href="#"><img src="${item.productInfo.imageUrl}" width="20%"/></a>
+                        <span>${item.productInfo.name}</span>
                     </td>
                     <td>
-                        <span class="red">￥<fmt:formatNumber type="number" value="${cartItem.value.productInfo.price}"
+                        <span class="red">￥<fmt:formatNumber type="number" value="${item.productInfo.price}"
                                                              pattern="0.00"/></span>
                     </td>
                     <td>
-                        <span>${cartItem.value.buyNum}</span>
+                        <span>${item.buyNum}</span>
                     </td>
                     <td>
-                        <span class="red">￥<fmt:formatNumber type="number" value="${cartItem.value.subTotal}"
+                        <span class="red">￥<fmt:formatNumber type="number" value="${item.subTotal}"
                                                              pattern="0.00"/></span>
                     </td>
                 </tr>
                 </c:if>
                 </c:forEach>
-
+                </c:forEach>
                 <tr class="tfoot">
                     <td class="tcol1">
                         <span>店铺合计	</span>

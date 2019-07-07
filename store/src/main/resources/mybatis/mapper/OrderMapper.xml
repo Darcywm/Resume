@@ -7,6 +7,7 @@
     -->
     <id column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
     <result column="payment" jdbcType="VARCHAR" property="payment" />
     <result column="payment_type" jdbcType="INTEGER" property="paymentType" />
     <result column="status" jdbcType="INTEGER" property="status" />

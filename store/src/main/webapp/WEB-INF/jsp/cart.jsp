@@ -188,56 +188,58 @@
                 </thead>
 
                 <tbody>
-                <tr class="shop_intro">
-                    <td class="tcol1">
-                        <input type="checkbox" class="select_all_oneShop" checked/>
-                        <span>全选</span>
-                    </td>
-                    <td>
-                        <span>dd(店铺)</span>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <c:forEach items="${cart.cartItems}" var="cartItem">
 
-                    <tr class="cart_item" id="cart_item${cartItem.value.productInfo.productId}">
+                <c:forEach items="${cart.cartItems}" var="cartItem">
+                    <tr class="shop_intro">
                         <td class="tcol1">
-                            <input type="checkbox" ${cartItem.value.checked?'checked':''}
-                                   onchange="checkOrNot(${cartItem.value.productInfo.productId},${cartItem.value.productInfo.price},this)"
+                            <input type="checkbox" class="select_all_oneShop" checked/>
+                            <span>全选</span>
+                        </td>
+                        <td>
+                            <span>${cartItem.key}</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                <c:forEach items="${cartItem.value}" var="item">
+                    <tr class="cart_item" id="cart_item${item.productInfo.productId}">
+                        <td class="tcol1">
+                            <input type="checkbox" ${item.checked?'checked':''}
+                                   onchange="checkOrNot(${item.productInfo.productId},${item.productInfo.price},this)"
                                    class="shop_checkbox"/>
                         </td>
                         <td>
-                            <a href="#"><img src="${cartItem.value.productInfo.imageUrl}" width="20%"/></a>
-                            <span>${cartItem.value.productInfo.name}</span>
+                            <a href="#"><img src="${item.productInfo.imageUrl}" width="20%"/></a>
+                            <span>${item.productInfo.name}</span>
                         </td>
                         <td>
-                            <span class="red">￥<fmt:formatNumber type="number" value="${cartItem.value.productInfo.price}"
+                            <span class="red">￥<fmt:formatNumber type="number" value="${item.productInfo.price}"
                                                                  pattern="0.00"/></span>
                         </td>
                         <td>
                             <div class="num">
-                                <input type="text" disabled class="buy_num" value="${cartItem.value.buyNum}"/>
+                                <input type="text" disabled class="buy_num" value="${item.buyNum}"/>
                                 <a href="javascript:void(0);" class="num_add"
-                                   onclick="add(${cartItem.value.productInfo.productId},${cartItem.value.productInfo.price})"></a>
+                                   onclick="add(${item.productInfo.productId},${item.productInfo.price})"></a>
                                 <a href="javascript:void(0);" class="num_sub"
-                                   onclick="sub(${cartItem.value.productInfo.productId},${cartItem.value.productInfo.price})"></a>
+                                   onclick="sub(${item.productInfo.productId},${item.productInfo.price})"></a>
                             </div>
                         </td>
                         <td>
                             <span class="red">￥</span>
                             <span class="red subTotal">
-										<fmt:formatNumber type="number" value="${cartItem.value.subTotal}"
+										<fmt:formatNumber type="number" value="${item.subTotal}"
                                                           pattern="0.00"/>
 									</span>
                         </td>
                         <td>
                             <a href="javascript:void(0);"
-                               onclick="deleteCartItem(${cartItem.value.productInfo.productId})">删除</a>
+                               onclick="deleteCartItem(${item.productInfo.productId})">删除</a>
                         </td>
                     </tr>
+                </c:forEach>
                 </c:forEach>
                 <tr class="tfoot">
                     <td class="tcol1">
