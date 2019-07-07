@@ -35,19 +35,19 @@ public class OrderController {
     /**
      * 填写订单信息页面
      *
-     * @param bookId
+     * @param productId
      * @param buyNum
      * @param request
      * @return
      */
     @GetMapping("/info")
-    public String orderInfo(@RequestParam(required = false, defaultValue = "0") int bookId,
+    public String orderInfo(@RequestParam(required = false, defaultValue = "0") int productId,
                             @RequestParam(required = false, defaultValue = "0") int buyNum,
                             HttpServletRequest request) throws BSException {
 
-        if (bookId != 0) {
+        if (productId != 0) {
             //点了立即购买，放到request域中，也session的立即购买域中以区分购物车中的书籍
-            ProductInfo productInfo = productInfoService.findById(bookId);
+            ProductInfo productInfo = productInfoService.findById(productId);
             if (productInfo != null) {
                 BSResult bsResult = cartService.addToCart(productInfo, null, buyNum);
                 request.getSession().setAttribute("buyNowCart", bsResult.getData());
