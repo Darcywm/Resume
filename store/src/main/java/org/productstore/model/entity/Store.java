@@ -31,6 +31,12 @@ public class Store {
     @Column(name = "updated")
     private Date updated;
 
+    @Column(name = "weixin_url")
+    private String weixinUrl;
+
+    @Column(name = "zhifubao_url")
+    private String zhifubaoUrl;
+
     @Transient
     private String storeManagerName;
 
@@ -152,5 +158,21 @@ public class Store {
      */
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public String getWeixinUrl() {
+        return weixinUrl;
+    }
+
+    public void setWeixinUrl(String weixinUrl) {
+        this.weixinUrl = weixinUrl == null ? null : weixinUrl.trim();
+    }
+
+    public String getZhifubaoUrl() {
+        return zhifubaoUrl;
+    }
+
+    public void setZhifubaoUrl(String zhifubaoUrl) {
+        this.zhifubaoUrl = zhifubaoUrl == null ? null : zhifubaoUrl.trim();
     }
 }

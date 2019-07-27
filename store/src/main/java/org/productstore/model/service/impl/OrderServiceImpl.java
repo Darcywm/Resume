@@ -149,7 +149,9 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     public BSResult findOrderById(String orderId) {
-        Orders orders = orderMapper.selectByPrimaryKey(orderId);
+        Orders order = orderMapper.selectByPrimaryKey(orderId);
+        List<Orders> orders =new ArrayList<>();
+        orders.add(order);
         return BSResultUtil.success(orders);
     }
 

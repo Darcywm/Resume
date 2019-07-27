@@ -132,7 +132,7 @@ public class AdminBookController {
     private void uploadPicture(ProductInfo productInfo, MultipartFile pictureFile, HttpServletRequest request) throws IOException {
         if(pictureFile != null){
             if (StringUtils.isNotBlank(pictureFile.getOriginalFilename())) {
-                String realPath = request.getSession().getServletContext().getRealPath("/" + urlPrefix);
+                String realPath = request.getSession().getServletContext().getRealPath("/" + urlPrefix + "/product");
                 //原始文件名称
                 String pictureFileName = pictureFile.getOriginalFilename();
                 //新文件名称
@@ -143,7 +143,7 @@ public class AdminBookController {
 
                 //向磁盘写文件
                 pictureFile.transferTo(uploadPic);
-                productInfo.setImageUrl(urlPrefix + "/" + newFileName);
+                productInfo.setImageUrl(urlPrefix + "/product/" + newFileName);
             }
         }
     }
