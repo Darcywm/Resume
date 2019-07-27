@@ -24,27 +24,30 @@
         </div>
         <div class="things">
             <p>
-                <span>订单号</span>
+                <span>订单号：</span>
                 <span>${order.orderId}</span>
             </p>
             <p>
-                <span>支付金额</span>
+                <span>支付金额：</span>
                 <span class="red">${order.payment}</span>
             </p>
         </div>
         <div class="things">
             <p>
-                <span>收款方</span>
-                <span>${order.storeId}</span>
+                <span>收款方：</span>
+                <span>${store.storeName}</span>
             </p>
             <p>
                 <span>收款码：(请扫码支付以上支付金额)</span>
             </p>
-            <img src="${productInfo.imageUrl}"/>
+            <img src="${store.weixinUrl}" style="width: 200px; height: 300px; margin-left: 100px;"/>
+            <p>
+                <span>（扫码支付完毕，请点击确认已支付）</span>
+            </p>
         </div>
     </div>
     <div class="next_div">
-        <a href="payment/${order.orderId}" class="toCart">确认已支付</a>
+        <a href="payment/ok/${order.orderId}" class="toCart">确认已支付</a>
         <a href="order/list" class="toShopping">查看所有订单</a>
     </div>
 </div>

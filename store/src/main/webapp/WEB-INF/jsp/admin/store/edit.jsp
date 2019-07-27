@@ -69,7 +69,20 @@
                 }
             });
         });
-
+        function changImg(e){
+            for (var i = 0; i < e.target.files.length; i++) {
+                var file = e.target.files.item(i);
+                if (!(/^image\/.*$/i.test(file.type))) {
+                    continue; //不是图片 就跳出这一次循环
+                }
+                //实例化FileReader API
+                var freader = new FileReader();
+                freader.readAsDataURL(file);
+                freader.onload = function(e) {
+                    $("#weixinImg").attr("src",e.target.result);
+                }
+            }
+        }
     </script>
 </head>
 <body>
@@ -77,7 +90,7 @@
     <div style="height:100px;border-bottom: 1px solid #CCCCCC;padding-top:30px;margin-bottom: 20px">
         <h2 class="h2">编辑店铺信息</h2>
     </div>
-    <form class="form-horizontal" role="form" id="storeForm" method="post" action="admin/store/edit">
+    <form class="form-horizontal" role="form" id="storeForm" method="post" action="admin/store/edit" enctype="multipart/form-data">
         <input type="hidden" name="storeId" value="${store.storeId}">
         <input type="hidden" name="storeManagerName" value="${store.storeManagerName}">
         <div class="form-group">
@@ -120,6 +133,15 @@
             <label for="created" class="col-sm-2 control-label" style="padding-left: 0">开店日期：</label>
             <div class="col-sm-5">
                 <span id="created"><fmt:formatDate value='${store.created}' pattern='yyyy-MM-dd'/></span>
+            </div>
+            <span></span>
+        </div>
+
+        <div class="form-group">
+            <label for="pictureFile" class="col-sm-2 control-label" style="padding-left: 0">微信收款码：</label>
+            <div class="col-sm-5">
+                <input type="file" id="pictureFile" name="pictureFile" onchange="changImg(event)">
+                图片预览:<img alt="暂无图片" id="weixinImg" src="${store.weixinUrl}" height="100px",width="100px">
             </div>
             <span></span>
         </div>

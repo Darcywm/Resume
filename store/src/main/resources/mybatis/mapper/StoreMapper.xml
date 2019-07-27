@@ -13,5 +13,7 @@
     <result column="store_position" jdbcType="VARCHAR" property="storePosition" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="weixin_url" jdbcType="VARCHAR" property="weixinUrl" />
+    <result column="zhifubao_url" jdbcType="VARCHAR" property="zhifubaoUrl" />
   </resultMap>
 </mapper>
