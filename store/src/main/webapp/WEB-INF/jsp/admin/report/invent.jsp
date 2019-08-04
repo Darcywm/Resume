@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>订单列表</title>
+    <title>库存信息</title>
     <base href="<%=basePath%>">
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
@@ -80,16 +80,16 @@
 </script>
 <body style="overflow: scroll;overflow-y:hidden">
 <div style="border: 1px solid #CCCCCC;padding-left:10px;">
-
     <table class="table table-hover">
         <caption>订单列表</caption>
         <thead>
         <tr>
             <th>序号</th>
-            <th>订单编号</th>
-            <th>商品信息</th>
-            <th>订单状态</th>
-            <th>金额</th>
+            <th>商品编号</th>
+            <th>商品名称</th>
+            <th>库存数量</th>
+            <th>销售数量</th>
+            <th>损坏数量</th>
             <th>操作</th>
         </tr>
         </thead>

@@ -85,15 +85,15 @@
         }
     </script>
 </head>
-<body>
-<div class="container" style="border: 1px solid #CCCCCC;height: 1000px;">
-    <div style="height:100px;border-bottom: 1px solid #CCCCCC;padding-top:30px;margin-bottom: 20px">
-        <h2 class="h2">编辑店铺信息</h2>
+<body style="overflow: scroll;overflow:hidden">
+<div style="border: 1px solid #CCCCCC;padding-left:10px;">
+    <div style="height:80px;border-bottom: 1px solid #CCCCCC;padding-top:10px;">
+        <h3 class="h3">编辑店铺信息</h3>
     </div>
     <form class="form-horizontal" role="form" id="storeForm" method="post" action="admin/store/edit" enctype="multipart/form-data">
         <input type="hidden" name="storeId" value="${store.storeId}">
         <input type="hidden" name="storeManagerName" value="${store.storeManagerName}">
-        <div class="form-group">
+        <div class="form-group" style="padding-top:10px;">
             <label for="storeManagerName" class="col-sm-2 control-label">店主：</label>
             <div class="col-sm-5">
                 <span id="storeManagerName">${store.storeManagerName}</span>

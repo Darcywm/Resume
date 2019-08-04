@@ -1,5 +1,7 @@
 package org.productstore.model.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.productstore.model.entity.*;
 import org.productstore.model.service.IOrderService;
 import org.productstore.common.pojo.BSResult;
@@ -18,6 +20,7 @@ import org.productstore.pay.PayContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.math.BigDecimal;
@@ -62,6 +65,16 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public List<OrderCustom> findOrdersByStoreId(int storeId) {
         return customMapper.findOrdersByStoreId(storeId);
+    }
+
+    @Override
+    public PageInfo<OrderCustom> findOrdersByCondition(int page, int pageSize, int storeId) {
+        PageHelper.startPage(page, pageSize);
+
+        List<OrderCustom> orderCustoms = customMapper.findOrdersByStoreId(storeId);
+        PageInfo<OrderCustom> pageInfo = new PageInfo<>(orderCustoms);
+        return pageInfo;
+
     }
 
     /**

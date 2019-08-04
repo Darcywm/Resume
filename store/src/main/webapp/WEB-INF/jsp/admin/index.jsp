@@ -42,7 +42,7 @@
     }
 </style>
 
-<body style="height: 1000px">
+<body>
 <div id="header">
     <div id="header_inner">
         <ul id="header_ul">
@@ -55,7 +55,7 @@
         </ul>
     </div>
 </div>
-<div id="center_header" style="height: 70px;border-bottom: 1px solid #CCCCCC;">
+<div id="center_header" style="height: 50px;border-bottom: 1px solid #CCCCCC;">
     <h2 class="h2" align="center">XX菜园后台管理系统</h2>
 </div>
 <div class="container" style="margin-top:10px ;">
@@ -195,6 +195,9 @@
                                             <li>
                                                 <a href="admin/report/sales" target="centerFrame">销售量</a>
                                             </li>
+                                            <li>
+                                                <a href="admin/report/invent" target="centerFrame">库存</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -258,8 +261,8 @@
             </ul>
         </div>
 
-        <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12" style="width: 82.5%;height: 100%;">
-            <iframe name="centerFrame" src="" border frameborder="no" style="width: 100%;height: 100%;"></iframe>
+        <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12" style=" width: 82.5%; height: 100%;">
+            <iframe name="centerFrame" src="" border frameborder="no" scrolling="yes" style="width: 100%;height: 100%;"></iframe>
         </div>
     </div>
 </div>

@@ -70,8 +70,8 @@
 
     </script>
 </head>
-<body>
-<div class="container" style="border: 1px solid #CCCCCC;height: 1000px;">
+<body style="overflow: scroll;overflow:hidden">
+<div style="border: 1px solid #CCCCCC;padding-left:10px;">
     <div style="height:100px;border-bottom: 1px solid #CCCCCC;padding-top:30px;margin-bottom: 20px">
         <h2 class="h2">用户编辑</h2>
     </div>
@@ -79,28 +79,38 @@
         <input type="hidden" name="orderId" value="${orderCustom.order.orderId}">
         <div class="form-group">
             <label for="orderId" class="col-sm-2 control-label">订单号：</label>
-            <div class="col-sm-5">
+            <div class="col-sm-4">
                 <span id="orderId">${orderCustom.order.orderId}</span>
             </div>
             <span></span>
-        </div>
-        <div class="form-group">
             <label for="username" class="col-sm-2 control-label">买家用户名：</label>
-            <div class="col-sm-5">
+            <div class="col-sm-4">
                 <span id="username">${buyer.username}</span>
             </div>
             <span></span>
         </div>
+
         <div class="form-group">
             <label for="payment" class="col-sm-2 control-label">商品总价：</label>
-            <div class="col-sm-5">
+            <div class="col-sm-4">
                 <span id="payment" class="red">￥${orderCustom.order.payment}</span>
             </div>
             <span></span>
+            <label for="postFee" class="col-sm-2 control-label">邮费：</label>
+            <div class="col-sm-4">
+                <span id="postFee">${orderCustom.order.postFee}</span>
+            </div>
+            <span></span>
         </div>
+
         <div class="form-group">
-            <label class="col-sm-2 control-label">支付类型</label>
-            <div class="col-sm-5">
+            <label for="createTime" class="col-sm-2 control-label">下单时间：</label>
+            <div class="col-sm-4">
+                <span id="createTime"><fmt:formatDate value="${orderCustom.order.createTime}" pattern="yyyy-MM-dd"/></span>
+            </div>
+            <span></span>
+            <label class="col-sm-2 control-label">支付类型：</label>
+            <div class="col-sm-4">
                 <c:if test="${orderCustom.order.status == 0}">
                     <span>未付款</span>
                 </c:if>
@@ -115,39 +125,9 @@
                 </c:if>
             </div>
         </div>
-        <div class="form-group">
-            <label for="postFee" class="col-sm-2 control-label">邮费：</label>
-            <div class="col-sm-5">
-                <span id="postFee">${orderCustom.order.postFee}</span>
-            </div>
-            <span></span>
-        </div>
-
 
         <div class="form-group">
-            <label for="createTime" class="col-sm-2 control-label">下单时间：</label>
-            <div class="col-sm-5">
-                <span id="createTime"><fmt:formatDate value="${orderCustom.order.createTime}" pattern="yyyy-MM-dd"/></span>
-            </div>
-            <span></span>
-        </div>
-
-        <div class="form-group">
-            <label for="shippingName" class="col-sm-2 control-label">快递：</label>
-            <div class="col-sm-5">
-                <select name="shippingName" id="shippingName">
-                    <option value="圆通" ${orderCustom.order.shippingName eq "圆通"? "selected":""}>圆通</option>
-                    <option value="中通" ${orderCustom.order.shippingName eq "中通"? "selected":""}>中通</option>
-                    <option value="顺丰" ${orderCustom.order.shippingName eq "顺丰"? "selected":""}>顺丰</option>
-                    <option value="申通" ${orderCustom.order.shippingName eq "申通"? "selected":""}>申通</option>
-                </select>
-            </div>
-            <span></span>
-        </div>
-
-
-        <div class="form-group">
-            <label for="receiverName" class="col-sm-2 control-label">收件人姓名：</label>
+            <label for="receiverName" class="col-sm-2 control-label">收货人姓名：</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" name="receiverName" id="receiverName" value="${orderCustom.orderShipping.receiverName}" placeholder="收件人姓名">
             </div>
@@ -155,7 +135,7 @@
         </div>
 
         <div class="form-group">
-            <label for="receiverMobile" class="col-sm-2 control-label">收件人手机号：</label>
+            <label for="receiverMobile" class="col-sm-2 control-label">收货人手机号：</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" name="receiverMobile" id="receiverMobile" value="${orderCustom.orderShipping.receiverMobile}" placeholder="收件人手机号">
             </div>
@@ -166,6 +146,35 @@
             <label for="receiverAddress" class="col-sm-2 control-label">收货地址：</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" name="receiverAddress" id="receiverAddress" value="${orderCustom.orderShipping.receiverAddress}" placeholder="收货地址">
+            </div>
+            <span></span>
+        </div>
+
+        <div class="form-group">
+            <label for="orderDetail" class="col-sm-2 control-label">订单详情：</label>
+            <div class="col-sm-5">
+                <table class="table table-hover" id="orderDetail">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>商品名称</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>总价</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${orderCustom.orderDetails}" var="orderDetail" varStatus="vs">
+                        <tr>
+                            <td>${vs.count}</td>
+                            <td>${orderDetail.productName}<img src="${orderDetail.imageUrl}" width="20%"/></td>
+                            <td>￥${orderDetail.unitPrice}</td>
+                            <td>${orderDetail.mount}</td>
+                            <td>${orderDetail.totalPrice}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
             <span></span>
         </div>

@@ -1,5 +1,6 @@
 package org.productstore.controller.admin;
 
+import com.github.pagehelper.PageInfo;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.productstore.common.pojo.BSResult;
 import org.productstore.common.utils.ExcelSheetSettingEnum;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,7 +28,6 @@ import java.util.*;
 @RequiresPermissions("order-manage")
 public class AdminOrderController {
 
-
     @Autowired
     private IOrderService orderService;
 
@@ -36,11 +37,11 @@ public class AdminOrderController {
 
     @RequestMapping("/list")
     @RequiresPermissions("order-list")
-    public String orderList(HttpServletRequest request){
+    public String orderList(@RequestParam(value = "page",defaultValue = "1",required = false) int page, HttpServletRequest request){
 
         Store loginStore = (Store) request.getSession().getAttribute("loginStore");
 
-        List<OrderCustom> orderCustoms = orderService.findOrdersByStoreId(loginStore.getStoreId());
+        PageInfo<OrderCustom> orderCustoms = orderService.findOrdersByCondition(0,5,loginStore.getStoreId());
 
         request.setAttribute("orderCustoms", orderCustoms);
 

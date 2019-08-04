@@ -69,7 +69,7 @@ public class AdminBookController {
         Store store = (Store)session.getAttribute("loginStore");
 
         if(store != null){
-            PageInfo<ProductInfo> products = productInfoService.findProductListByCondition(keywords,0,page,10,store.getStoreId());
+            PageInfo<ProductInfo> products = productInfoService.findProductListByCondition(keywords,0,page,5,store.getStoreId());
             model.addAttribute("productPageInfo", products);
             model.addAttribute("keywords", keywords);
         }else {

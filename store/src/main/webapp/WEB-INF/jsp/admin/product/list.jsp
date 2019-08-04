@@ -20,12 +20,12 @@
 
     <style type="text/css">
         td {
-            max-width: 100px;
+            max-width: 70px;
             overflow: hidden;
         }
 
         #searchBook {
-            padding-top: 50px;
+            padding-top: 30px;
         }
     </style>
 
@@ -57,14 +57,13 @@
     </script>
 </head>
 
-<body>
-<div class="container" style="border: 1px solid #CCCCCC;">
+<body style="overflow: scroll;overflow:hidden">
+<div style="border: 1px solid #CCCCCC;padding-left:10px;">
     <div id="searchBook" style="height:100px;border-bottom: 1px solid #CCCCCC;">
         <form action="admin/product/list" class="form-inline" role="form" method="get">
             <div class="form-group">
                 <input type="text" class="form-control" id="name" name="keywords" value="${keywords}" placeholder="菜名">
             </div>
-
             <button type="submit" class="btn btn-default">
                 <span class="glyphicon glyphicon-search"></span> 蔬菜检索
             </button>
@@ -82,7 +81,8 @@
             <th>定价</th>
             <th>状态</th>
             <th>库存</th>
-            <th>操作</th>
+            <th>备注</th>
+            <th style="width: 100px">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -98,7 +98,8 @@
                 <td class="red">${product.isShelf == 1 ?"上架中":"已下架"}</td>
                     <%--<td><fmt:formatDate value="${book.publishDate}" pattern="yyyy-MM-dd"/></td>--%>
                 <td>${product.storeMount}</td>
-                <td>
+                <td>wewrwerewrwer</td>
+                <td style="width: 100px">
                     <button type="button" class="btn btn-xs btn-info" onclick="editProduct(${product.productId})">
                         <span class="glyphicon glyphicon-pencil"></span> 编辑
                     </button>

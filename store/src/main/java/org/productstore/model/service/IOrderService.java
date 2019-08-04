@@ -1,5 +1,6 @@
 package org.productstore.model.service;
 
+import com.github.pagehelper.PageInfo;
 import org.productstore.common.pojo.BSResult;
 import org.productstore.model.entity.custom.Cart;
 import org.productstore.model.entity.User;
@@ -13,6 +14,8 @@ public interface IOrderService {
     List<OrderCustom> findOrdersByUserId(int userId);
 
     List<OrderCustom> findOrdersByStoreId(int storeId);
+
+    PageInfo<OrderCustom> findOrdersByCondition(int page, int pageSize, int storeId);
 
     BSResult createOrder(Cart cart, User user, String express, int payMethod);
 

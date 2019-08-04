@@ -97,53 +97,57 @@
         }
     </script>
 </head>
-<body>
-<div id="searchBook" style="height:50px;border-bottom: 1px solid #CCCCCC;margin-bottom: 10px"></div>
-<div class="container" style="border: 1px solid #CCCCCC;">
+<body style="overflow: scroll; overflow-x:hidden">
+<div style="border: 1px solid #CCCCCC;padding-left:10px;">
+    <div style="height:80px;border-bottom: 1px solid #CCCCCC;padding-top:10px;">
+        <h3 class="h3">编辑商品</h3>
+    </div>
+
     <form class="form-horizontal" role="form" id="bookForm" method="post" action="admin/product/update"
-          enctype="multipart/form-data">
+          enctype="multipart/form-data"  style="margin-top: 10px">
         <input type="hidden" name="storeId" value="${productInfo.storeId}">
         <input type="hidden" name="productId" value="${productInfo.productId}">
         <div class="form-group">
             <label for="name" class="col-sm-1 control-label">菜名：</label>
-            <div class="col-sm-5">
+            <div class="col-sm-4">
                 <input type="text" class="form-control" id="name" name="name" value="${productInfo.name}" placeholder="请输入菜名">
             </div>
-            <span></span>
-        </div>
-        <div class="form-group">
+            <span class="col-sm-2"></span>
             <label for="price" class="col-sm-1 control-label">价格：</label>
-            <div class="col-sm-5">
+            <div class="col-sm-2">
                 <input type="text" class="form-control" id="price" name="price" value="${productInfo.price}" placeholder="请输入价格">
             </div>
-            <span></span>
-        </div>
-        <div class="form-group">
-            <label for="marketPrice" class="col-sm-1 control-label">定价：</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" id="marketPrice" value="${productInfo.marketPrice}" name="marketPrice" placeholder="请输入定价">
-            </div>
-            <span></span>
+            <span class="col-sm-2"></span>
         </div>
 
         <div class="form-group">
+            <label for="marketPrice" class="col-sm-1 control-label">定价：</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="marketPrice" value="${productInfo.marketPrice}" name="marketPrice" placeholder="请输入定价">
+            </div>
+            <span class="col-sm-2"></span>
             <label for="storeMount" class="col-sm-1 control-label">库存：</label>
-            <div class="col-sm-5">
+            <div class="col-sm-2">
                 <input type="text" class="form-control" id="storeMount" name="storeMount" value="${productInfo.storeMount}" placeholder="库存">
             </div>
             <span></span>
         </div>
 
         <div class="form-group">
+            <label for="remark" class="col-sm-1 control-label">备注：</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="remark" name="remark" placeholder="备注">
+            </div>
+            <span class="col-sm-2"></span>
             <label for="productCategoryId" class="col-sm-1 control-label" >类型：</label>
-            <div class="col-sm-5">
-                <select name="productCategoryId" id="productCategoryId" class="form-control" style="width: 100px;">
+            <div class="col-sm-2">
+                <select name="productCategoryId" id="productCategoryId" class="form-control">
                     <c:forEach items="${applicationScope.productCategories}" var="cate">
                         <option value="${cate.cateId}" ${cate.cateId == productInfo.productCategoryId?"selected":""}>${cate.name}</option>
                     </c:forEach>
                 </select>
             </div>
-            <span></span>
+            <span class="col-sm-2"></span>
         </div>
         <div class="form-group">
             <label for="pictureFile" class="col-sm-1 control-label" >图片：</label>
@@ -196,7 +200,7 @@
         ue.ready(function () {
             //设置编辑器的内容
             ue.setContent('${productDesc.productDesc}');
-            ue.setHeight("300");
+            ue.setHeight("180");
             //获取html内容，返回: <p>hello</p>
             var html = ue.getContent();
             //获取纯文本内容，返回: hello

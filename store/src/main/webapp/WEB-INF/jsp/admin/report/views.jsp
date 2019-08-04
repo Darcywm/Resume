@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>人气书籍</title>
+    <title>人气商品</title>
     <base href="<%=basePath%>">
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script src="js/highcharts/highcharts.js"></script>
@@ -15,8 +15,8 @@
     <script src="js/base-loading.js"></script>
 </head>
 <body>
-    <div class="row" id="center_header" style="height: 100px;border-bottom: 1px solid #CCCCCC;">
-    </div>
+    <!--<div class="row" id="center_header" style="height: 100px;border-bottom: 1px solid #CCCCCC;">
+    </div> -->
     <div id="container" style="min-width:400px;height:400px"></div>
     <script>
         $.getJSON('<%=basePath%>'+'admin/report/views/pie', function (data) {
@@ -28,7 +28,7 @@
                     type: 'pie'
                 },
                 title: {
-                    text: '书籍访问量前8名',
+                    text: '商品访问量前8名',
                     style:{"fontSize": "22px"}
                 },
                 tooltip: {

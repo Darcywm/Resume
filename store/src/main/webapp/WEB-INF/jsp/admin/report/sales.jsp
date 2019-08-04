@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>热销书籍</title>
+    <title>热销商品</title>
     <base href="<%=basePath%>">
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script src="js/highcharts/highcharts.js"></script>
@@ -15,8 +15,6 @@
     <script src="js/base-loading.js"></script>
 </head>
 <body>
-    <div class="row" id="center_header" style="height: 100px;border-bottom: 1px solid #CCCCCC;">
-    </div>
     <div id="container" style="min-width:400px;height:400px"></div>
     <script>
         var date = new Date();
@@ -26,7 +24,7 @@
                     type: 'bar'
                 },
                 title: {
-                    text: '图书总销售额条形图'
+                    text: '商品总销售额条形图'
                 },
                 subtitle: {
                     text: '数据来源: dd.com'

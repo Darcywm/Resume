@@ -117,8 +117,6 @@ public class ProductInfoServiceImpl implements IProductInfoService {
      */
     @Override
     public PageInfo<ProductInfo> findProductListByCondition(String keywords, int cateId, int page, int pageSize, int storeId) {
-
-
         PageHelper.startPage(page, pageSize);
         Example bookInfoExample = new Example(ProductInfo.class);
 

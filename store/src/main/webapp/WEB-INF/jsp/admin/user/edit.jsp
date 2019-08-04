@@ -98,10 +98,10 @@
 
     </script>
 </head>
-<body>
-<div class="container" style="border: 1px solid #CCCCCC;height: 1000px;">
+<body style="overflow: scroll;overflow:hidden">
+<div style="border: 1px solid #CCCCCC;padding-left: 10px">
     <div style="height:100px;border-bottom: 1px solid #CCCCCC;padding-top:30px;margin-bottom: 20px">
-        <h2 class="h2">用户编辑</h2>
+        <h2 class="h2">用户信息编辑</h2>
     </div>
     <form class="form-horizontal" role="form" id="storeForm" method="post" action="admin/user/update">
         <input type="hidden" name="userId" value="${user.userId}">
