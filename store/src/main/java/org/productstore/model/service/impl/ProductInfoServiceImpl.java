@@ -180,7 +180,6 @@ public class ProductInfoServiceImpl implements IProductInfoService {
 
         productInfo.setLookMount(100);
         productInfo.setDealMount(100);
-        productInfo.setPackStyle("平装-胶订");
         productInfo.setIsShelf(1);
 
         productInfoMapper.insert(productInfo);

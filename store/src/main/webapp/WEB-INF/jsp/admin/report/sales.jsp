@@ -27,10 +27,10 @@
                     text: '商品总销售额条形图'
                 },
                 subtitle: {
-                    text: '数据来源: dd.com'
+                    text: '数据来源: xx.com'
                 },
                 xAxis: {
-                    categories: data.bookNames,
+                    categories: data.productNames,
                     title: {
                         text: null
                     }
@@ -38,7 +38,7 @@
                 yAxis: {
                     min: 0,
                     title: {
-                        text: '销售量 (本)',
+                        text: '销售量 (斤)',
                         align: 'high'
                     },
                     labels: {
@@ -46,7 +46,7 @@
                     }
                 },
                 tooltip: {
-                    valueSuffix: ' 本'
+                    valueSuffix: ' 斤'
                 },
                 plotOptions: {
                     bar: {

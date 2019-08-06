@@ -63,9 +63,9 @@
         alert("暂无物流信息!");
     }
 
-    function postOrder(orderId) {
-        if (confirm("确认发货吗?")) {
-            location.href = "<%=basePath%>admin/order/post/" + orderId;
+    function confirmOrder(orderId) {
+        if (confirm("确认已付款吗?")) {
+            location.href = "<%=basePath%>admin/order/confirm/" + orderId;
         }
     }
     
@@ -85,12 +85,15 @@
         <caption>订单列表</caption>
         <thead>
         <tr>
-            <th>序号</th>
+            <th style="width: 45px">序号</th>
             <th>订单编号</th>
-            <th>商品信息</th>
+            <th>买家</th>
+            <th>下单时间</th>
             <th>订单状态</th>
-            <th>金额</th>
-            <th>操作</th>
+            <th>付款时间</th>
+            <th style="width: 80px">确认状态</th>
+            <th style="width: 70px">金额</th>
+            <th style="width: 150px">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -98,42 +101,32 @@
             <tr>
                 <td>${vs.count}</td>
                 <td>${orderCustom.order.orderId}</td>
-                <td width="300px">
-                    <c:forEach items="${orderCustom.orderDetails}" var="orderDetail">
-                        <span>${orderDetail.mount}&nbsp;x</span>
-                        <a href="/info/${orderDetail.productId}" title="${orderDetail.productName}" target="_blank"><img src="${orderDetail.imageUrl}" width="20%"/></a>
-                    </c:forEach>
+                <td><button type="button" id="buyerInfo" class="btn btn-xs btn-warning buyerInfo"
+                            data-container="body" data-toggle="popover" value="${orderCustom.order.userId}" <%--onclick="findBuyerInfo(${orderCustom.order.userId})"--%>>
+                    买家信息
+                </button>
                 </td>
+                <td><fmt:formatDate value="${orderCustom.order.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                 <td>${orderCustom.order.statusString}</td>
+                <td><fmt:formatDate value="${orderCustom.order.paymentTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                <td>${orderCustom.order.confirmStatusString}</td>
                 <td class="red">￥${orderCustom.order.payment}</td>
                 <td>
                     <button type="button" class="btn btn-xs btn-info" onclick="toEditOrder('${orderCustom.order.orderId}')" >
-                        查看订单
+                        订单详情
                     </button>
                     <c:if test="${orderCustom.order.status == 0}">
                         <button type="button" class="btn btn-xs btn-danger" onclick="deleteOrder('${orderCustom.order.orderId}')">
                             取消订单
                         </button>
                     </c:if>
-                    <button type="button" id="buyerInfo" class="btn btn-xs btn-warning buyerInfo"
-                            data-container="body" data-toggle="popover"
-
-                            value="${orderCustom.order.userId}" <%--onclick="findBuyerInfo(${orderCustom.order.userId})"--%>>
-                        买家信息
-                    </button>
                     <c:if test="${orderCustom.order.status != 0}">
-                        <!--
-                        <c:if test="${orderCustom.order.status < 3}">
-                            <button type="button" class="btn btn-xs btn-info" onclick="postOrder('${orderCustom.order.orderId}')" >
-                                发货
+
+                        <c:if test="${orderCustom.order.confirmStatus == 0}">
+                            <button type="button" class="btn btn-xs btn-info" onclick="confirmOrder('${orderCustom.order.orderId}')" >
+                                确认付款
                             </button>
                         </c:if>
-                        -->
-                        <!--
-                        <button type="button" class="btn btn-xs btn-info" onclick="lookShipping()" >
-                            查看物流
-                        </button>
-                        -->
                         <button type="button" class="btn btn-xs btn-danger" onclick="deleteOrder('${orderCustom.order.orderId}')">
                             删除订单
                         </button>

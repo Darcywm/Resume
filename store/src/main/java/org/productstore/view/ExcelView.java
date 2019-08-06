@@ -55,16 +55,8 @@ public class ExcelView  extends AbstractXlsxView {
                 titleCell.setCellValue(titles[i]);
             }
 
-            String total = map.get("total").toString();
-            if (total != null) {
-                Row row = sheet.createRow(index++);
-                Cell cell = row.createCell(0);
-                cell.setCellValue("总价");
-                Cell cell2 = row.createCell(1);
-                cell2.setCellValue(total);
-            }
             String receiverName = map.get("receiverName").toString();
-            if (total != null) {
+            if (receiverName != null) {
                 Row row = sheet.createRow(index++);
                 Cell cell = row.createCell(0);
                 cell.setCellValue("收货人");
@@ -73,7 +65,7 @@ public class ExcelView  extends AbstractXlsxView {
             }
 
             String receiverMobile = map.get("receiverMobile").toString();
-            if (total != null) {
+            if (receiverMobile != null) {
                 Row row = sheet.createRow(index++);
                 Cell cell = row.createCell(0);
                 cell.setCellValue("收货人联系方式");
@@ -82,12 +74,21 @@ public class ExcelView  extends AbstractXlsxView {
             }
 
             String receiverAddr = map.get("receiverAddr").toString();
-            if (total != null) {
+            if (receiverAddr != null) {
                 Row row = sheet.createRow(index++);
                 Cell cell = row.createCell(0);
                 cell.setCellValue("收货地址");
                 Cell cell2 = row.createCell(1);
                 cell2.setCellValue(receiverAddr);
+            }
+
+            String total = map.get("total").toString();
+            if (total != null) {
+                Row row = sheet.createRow(index++);
+                Cell cell = row.createCell(0);
+                cell.setCellValue("总价");
+                Cell cell2 = row.createCell(1);
+                cell2.setCellValue(total);
             }
 
             CellStyle cellStyle1 = workbook.createCellStyle();

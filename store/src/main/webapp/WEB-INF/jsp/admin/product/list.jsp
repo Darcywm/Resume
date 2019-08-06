@@ -23,14 +23,12 @@
             max-width: 70px;
             overflow: hidden;
         }
-
         #searchBook {
             padding-top: 30px;
         }
     </style>
 
     <script type="text/javascript">
-
         function editProduct(productId) {
             location.href = "<%=basePath%>admin/product/echo?productId=" + productId;
         }
@@ -53,7 +51,6 @@
                 location.href = "<%=basePath%>admin/product/deletion/"+productId+"?keywords="+'${keywords}';
             }
         }
-
     </script>
 </head>
 
@@ -75,6 +72,7 @@
         <thead>
         <tr>
             <th>序号</th>
+            <th>编号</th>
             <th>菜名</th>
             <th>图片</th>
             <th>现价</th>
@@ -89,6 +87,7 @@
         <c:forEach items="${productPageInfo.list}" var="product" varStatus="vs">
             <tr>
                 <td>${productPageInfo.startRow + vs.count-1}</td>
+                <td>${product.productNum}</td>
                 <td>${product.name}</td>
                 <td>
                     <img src="${product.imageUrl}" style="width: 50%">
@@ -98,7 +97,7 @@
                 <td class="red">${product.isShelf == 1 ?"上架中":"已下架"}</td>
                     <%--<td><fmt:formatDate value="${book.publishDate}" pattern="yyyy-MM-dd"/></td>--%>
                 <td>${product.storeMount}</td>
-                <td>wewrwerewrwer</td>
+                <td>${product.remark}</td>
                 <td style="width: 100px">
                     <button type="button" class="btn btn-xs btn-info" onclick="editProduct(${product.productId})">
                         <span class="glyphicon glyphicon-pencil"></span> 编辑

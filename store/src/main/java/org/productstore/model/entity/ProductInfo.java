@@ -36,16 +36,10 @@ public class ProductInfo {
     private BigDecimal price;
 
     /**
-     * 总页数
-     */
-    @Column(name = "pages")
-    private Integer pages;
-
-    /**
      * 目录
      */
-    @Column(name = "catalog")
-    private String catalog;
+    @Column(name = "product_num")
+    private String productNum;
 
     /**
      * 市场价\定价
@@ -87,22 +81,31 @@ public class ProductInfo {
     private Integer storeMount;
 
     /**
+     * 库存数量
+     */
+    @Column(name = " bad_mount")
+    private Integer  badMount;
+
+    /**
      * 入库时间
      */
     @Column(name = "store_time")
     private Date storeTime;
 
     /**
-     * 封装方式
-     */
-    @Column(name = "pack_style")
-    private String packStyle;
-
-    /**
      * 是否上架
      */
     @Column(name = "is_shelf")
     private Integer isShelf;
+
+    /**
+     * 备注
+     */
+    @Column(name = "remark")
+    private String remark;
+
+    @Column(name = "invent_Remark")
+    private String inventRemark;
 
     @Transient
     private String categoryName;
@@ -232,40 +235,12 @@ public class ProductInfo {
         this.price = price;
     }
 
-    /**
-     * 获取总页数
-     *
-     * @return pages - 总页数
-     */
-    public Integer getPages() {
-        return pages;
+    public String getProductNum() {
+        return productNum;
     }
 
-    /**
-     * 设置总页数
-     *
-     * @param pages 总页数
-     */
-    public void setPages(Integer pages) {
-        this.pages = pages;
-    }
-
-    /**
-     * 获取目录
-     *
-     * @return catalog - 目录
-     */
-    public String getCatalog() {
-        return catalog;
-    }
-
-    /**
-     * 设置目录
-     *
-     * @param catalog 目录
-     */
-    public void setCatalog(String catalog) {
-        this.catalog = catalog == null ? null : catalog.trim();
+    public void setProductNum(String productNum) {
+        this.productNum = productNum;
     }
 
     /**
@@ -390,6 +365,14 @@ public class ProductInfo {
         this.storeMount = storeMount;
     }
 
+    public Integer getBadMount() {
+        return badMount;
+    }
+
+    public void setBadMount(Integer badMount) {
+        this.badMount = badMount;
+    }
+
     /**
      * 获取入库时间
      *
@@ -409,24 +392,6 @@ public class ProductInfo {
     }
 
     /**
-     * 获取封装方式
-     *
-     * @return pack_style - 封装方式
-     */
-    public String getPackStyle() {
-        return packStyle;
-    }
-
-    /**
-     * 设置封装方式
-     *
-     * @param packStyle 封装方式
-     */
-    public void setPackStyle(String packStyle) {
-        this.packStyle = packStyle == null ? null : packStyle.trim();
-    }
-
-    /**
      * 获取是否上架
      *
      * @return is_shelf - 是否上架
@@ -442,5 +407,21 @@ public class ProductInfo {
      */
     public void setIsShelf(Integer isShelf) {
         this.isShelf = isShelf;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getInventRemark() {
+        return inventRemark;
+    }
+
+    public void setInventRemark(String inventRemark) {
+        this.inventRemark = inventRemark;
     }
 }

@@ -110,6 +110,7 @@ public class OrderServiceImpl implements IOrderService {
                 order.setPayment(String.format("%.2f", payment));
                 order.setPaymentType(payMethod);
                 order.setStatus(NOT_COMPLETED);
+                order.setConfirmStatus(NOT_COMPLETED);
                 order.setBuyerRate(NOT_COMPLETED);
                 order.setPostFee("0.00");//邮费
                 orderMapper.insert(order);
@@ -144,6 +145,7 @@ public class OrderServiceImpl implements IOrderService {
                             orderDetail.setUnitPrice(cartItem.getProductInfo().getPrice());
                             orderDetail.setImageUrl(cartItem.getProductInfo().getImageUrl());
                             orderDetail.setProductName(cartItem.getProductInfo().getName());
+                            orderDetail.setProductNum(cartItem.getProductInfo().getProductNum());
                             orderDetails.add(orderDetail);
                             orderDetailMapper.insert(orderDetail);
                         }
@@ -223,12 +225,14 @@ public class OrderServiceImpl implements IOrderService {
         orders.setOrderId(orderId);
         try {
             orders.setStatus(POSTED);
+            orders.setConfirmStatus(COMPLETED);
             orderMapper.updateByPrimaryKeySelective(orders);
         } catch (Exception e) {
             orders.setStatus(NOT_POST);
+            orders.setConfirmStatus(NOT_COMPLETED);
             orderMapper.updateByPrimaryKeySelective(orders);
             e.printStackTrace();
-            return BSResultUtil.build(500, "发货失败");
+            return BSResultUtil.build(500, "确认失败");
         }
         return BSResultUtil.success();
     }

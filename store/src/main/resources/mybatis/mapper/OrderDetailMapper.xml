@@ -18,5 +18,6 @@
     <result column="receive_status" jdbcType="VARCHAR" property="receiveStatus" />
     <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
     <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_num" jdbcType="VARCHAR" property="productNum" />
   </resultMap>
 </mapper>

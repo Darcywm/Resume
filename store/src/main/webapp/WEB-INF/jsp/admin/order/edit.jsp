@@ -73,7 +73,7 @@
 <body style="overflow: scroll;overflow:hidden">
 <div style="border: 1px solid #CCCCCC;padding-left:10px;">
     <div style="height:100px;border-bottom: 1px solid #CCCCCC;padding-top:30px;margin-bottom: 20px">
-        <h2 class="h2">用户编辑</h2>
+        <h2 class="h2">订单详情</h2>
     </div>
     <form class="form-horizontal" role="form" id="orderForm" method="post" action="admin/order/update">
         <input type="hidden" name="orderId" value="${orderCustom.order.orderId}">
@@ -152,21 +152,23 @@
 
         <div class="form-group">
             <label for="orderDetail" class="col-sm-2 control-label">订单详情：</label>
-            <div class="col-sm-5">
+            <div class="col-sm-9">
                 <table class="table table-hover" id="orderDetail">
                     <thead>
                     <tr>
-                        <th>序号</th>
-                        <th>商品名称</th>
-                        <th>单价</th>
-                        <th>数量</th>
-                        <th>总价</th>
+                        <th style="width: 45px">序号</th>
+                        <th style="width: 100px">商品编号</th>
+                        <th style="width: 140px">商品名称</th>
+                        <th style="width: 100px">单价</th>
+                        <th style="width: 100px">数量</th>
+                        <th style="width: 100px">总价</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${orderCustom.orderDetails}" var="orderDetail" varStatus="vs">
                         <tr>
                             <td>${vs.count}</td>
+                            <td>${orderDetail.productNum}
                             <td>${orderDetail.productName}<img src="${orderDetail.imageUrl}" width="20%"/></td>
                             <td>￥${orderDetail.unitPrice}</td>
                             <td>${orderDetail.mount}</td>

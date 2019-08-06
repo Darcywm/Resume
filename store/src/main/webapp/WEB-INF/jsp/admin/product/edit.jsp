@@ -28,6 +28,9 @@
                 },
                 errorClass: "red",
                 rules: {
+                    productNum:{
+                        required: true
+                    },
                     name: {
                         required: true
                     },
@@ -54,6 +57,9 @@
                     }
                 },
                 messages: {
+                    productNum:{
+                        required: "请输入编码"
+                    },
                     name: {
                         required: "请输入名"
                     },
@@ -108,9 +114,9 @@
         <input type="hidden" name="storeId" value="${productInfo.storeId}">
         <input type="hidden" name="productId" value="${productInfo.productId}">
         <div class="form-group">
-            <label for="name" class="col-sm-1 control-label">菜名：</label>
+            <label for="productNum" class="col-sm-1 control-label">编码：</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="name" name="name" value="${productInfo.name}" placeholder="请输入菜名">
+                <input type="text" class="form-control" id="productNum" name="productNum" value="${productInfo.productNum}" placeholder="请输入编码">
             </div>
             <span class="col-sm-2"></span>
             <label for="price" class="col-sm-1 control-label">价格：</label>
@@ -121,25 +127,25 @@
         </div>
 
         <div class="form-group">
-            <label for="marketPrice" class="col-sm-1 control-label">定价：</label>
+            <label for="name" class="col-sm-1 control-label">菜名：</label>
             <div class="col-sm-4">
+                <input type="text" class="form-control" id="name" name="name" value="${productInfo.name}" placeholder="请输入菜名">
+            </div>
+            <span class="col-sm-2"></span>
+            <label for="marketPrice" class="col-sm-1 control-label">定价：</label>
+            <div class="col-sm-2">
                 <input type="text" class="form-control" id="marketPrice" value="${productInfo.marketPrice}" name="marketPrice" placeholder="请输入定价">
             </div>
             <span class="col-sm-2"></span>
-            <label for="storeMount" class="col-sm-1 control-label">库存：</label>
-            <div class="col-sm-2">
-                <input type="text" class="form-control" id="storeMount" name="storeMount" value="${productInfo.storeMount}" placeholder="库存">
-            </div>
-            <span></span>
         </div>
 
         <div class="form-group">
-            <label for="remark" class="col-sm-1 control-label">备注：</label>
+            <label for="storeMount" class="col-sm-1 control-label">库存：</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="remark" name="remark" placeholder="备注">
+                <input type="text" class="form-control" id="storeMount" name="storeMount" value="${productInfo.storeMount}" placeholder="库存">
             </div>
             <span class="col-sm-2"></span>
-            <label for="productCategoryId" class="col-sm-1 control-label" >类型：</label>
+            <label for="productCategoryId" class="col-sm-1 control-label" >分类：</label>
             <div class="col-sm-2">
                 <select name="productCategoryId" id="productCategoryId" class="form-control">
                     <c:forEach items="${applicationScope.productCategories}" var="cate">
@@ -151,14 +157,18 @@
         </div>
         <div class="form-group">
             <label for="pictureFile" class="col-sm-1 control-label" >图片：</label>
-            <div class="col-sm-5">
+            <div class="col-sm-4">
                 <input type="file" id="pictureFile" name="pictureFile" onchange="changImg(event)">
                 图片预览:<img alt="暂无图片" id="myImg" src="${productInfo.imageUrl}" height="100px",width="100px">
+            </div>
+            <span class="col-sm-2"></span>
+            <label for="remark" class="col-sm-1 control-label">备注：</label>
+            <div class="col-sm-4">
+                <textarea class="form-control" id="remark" name="remark"  placeholder="备注">${productInfo.remark}</textarea>
             </div>
         </div>
         <div class="form-group">
             <label for="outline" class="col-sm-1 control-label">概述：</label>
-
             <div class="col-sm-5">
                  <textarea class="form-control" id="outline" name="outline" rows="4"
                            style="padding:0px">${productInfo.outline}</textarea>

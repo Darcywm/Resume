@@ -29,7 +29,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/admin/product")
 @RequiresPermissions("book-manage")
-public class AdminBookController {
+public class AdminProductController {
 
     @Autowired
     private IProductInfoService productInfoService;
@@ -59,12 +59,33 @@ public class AdminBookController {
         return "redirect:/admin/product/list";
     }
 
+    @RequestMapping(value = "/invent")
+    @RequiresPermissions("book-query")
+    public String inventList(@RequestParam(defaultValue = "", required = false) String keywords,
+                           @RequestParam(value = "page",defaultValue = "1",required = false) int page,
+                           HttpSession session,
+                           Model model) {
+        keywords = keywords.trim();
+        Store store = (Store)session.getAttribute("loginStore");
+
+        if(store != null){
+            PageInfo<ProductInfo> products = productInfoService.findProductListByCondition(keywords,0,page,6,store.getStoreId());
+            model.addAttribute("productPageInfo", products);
+            model.addAttribute("keywords", keywords);
+        }else {
+            model.addAttribute("exception", "您请求的资源不存在");
+            return "exception";
+        }
+
+        return "admin/report/invent";
+    }
+
     @RequestMapping(value = "/list")
     @RequiresPermissions("book-query")
     public String bookList(@RequestParam(defaultValue = "", required = false) String keywords,
-                          @RequestParam(value = "page",defaultValue = "1",required = false) int page,
-                          HttpSession session,
-                          Model model) {
+                           @RequestParam(value = "page",defaultValue = "1",required = false) int page,
+                           HttpSession session,
+                           Model model) {
         keywords = keywords.trim();
         Store store = (Store)session.getAttribute("loginStore");
 

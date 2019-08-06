@@ -13,7 +13,7 @@
     <result column="detail" jdbcType="VARCHAR" property="detail" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="pages" jdbcType="INTEGER" property="pages" />
-    <result column="catalog" jdbcType="VARCHAR" property="catalog" />
+    <result column="product_num" jdbcType="VARCHAR" property="productNum" />
     <result column="market_price" jdbcType="DECIMAL" property="marketPrice" />
     <result column="member_price" jdbcType="DECIMAL" property="memberPrice" />
     <result column="deal_mount" jdbcType="INTEGER" property="dealMount" />
@@ -21,8 +21,10 @@
     <result column="discount" jdbcType="DECIMAL" property="discount" />
     <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
     <result column="store_mount" jdbcType="INTEGER" property="storeMount" />
+    <result column="bad_mount" jdbcType="INTEGER" property="badMount" />
     <result column="store_time" jdbcType="TIMESTAMP" property="storeTime" />
-    <result column="pack_style" jdbcType="VARCHAR" property="packStyle" />
     <result column="is_shelf" jdbcType="INTEGER" property="isShelf" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="invent_remark" jdbcType="VARCHAR" property="inventRemark" />
   </resultMap>
 </mapper>

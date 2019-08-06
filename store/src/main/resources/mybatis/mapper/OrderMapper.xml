@@ -22,5 +22,6 @@
     <result column="shipping_code" jdbcType="VARCHAR" property="shippingCode" />
     <result column="buyer_message" jdbcType="VARCHAR" property="buyerMessage" />
     <result column="buyer_rate" jdbcType="INTEGER" property="buyerRate" />
+    <result column="confirm_status" jdbcType="INTEGER" property="confirmStatus" />
   </resultMap>
 </mapper>

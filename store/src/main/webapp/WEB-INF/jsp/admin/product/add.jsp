@@ -27,6 +27,9 @@
                 },
                 errorClass: "red",
                 rules: {
+                    productNum:{
+                        required: true
+                    },
                     name: {
                         required: true
                     },
@@ -56,6 +59,9 @@
                     }
                 },
                 messages: {
+                    productNum:{
+                        required: "请输入编码"
+                    },
                     name: {
                         required: "请输入菜名",
                     },
@@ -80,7 +86,7 @@
                     outline: {
                         required: "请填写商品概要"
                     },
-                    bookDesc: {
+                    productDesc: {
                         required: "请添加商品详情"
                     }
                 }
@@ -114,9 +120,9 @@
         <input type="hidden" name="storeId" value="${sessionScope.loginStore.storeId}">
 
         <div class="form-group">
-            <label for="name" class="col-sm-1 control-label">菜名：</label>
+            <label for="productNum" class="col-sm-1 control-label">编码：</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="name" name="name" placeholder="请输入菜名">
+                <input type="text" class="form-control" id="productNum" name="name" placeholder="请输入编码">
             </div>
             <span class="col-sm-2"></span>
             <label for="price" class="col-sm-1 control-label">价格：</label>
@@ -127,22 +133,22 @@
         </div>
 
         <div class="form-group">
-            <label for="marketPrice" class="col-sm-1 control-label">定价：</label>
+            <label for="name" class="col-sm-1 control-label">菜名：</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="marketPrice" name="marketPrice" placeholder="请输入定价">
+                <input type="text" class="form-control" id="name" name="name" placeholder="请输入菜名">
             </div>
             <span class="col-sm-2"></span>
-            <label for="storeMount" class="col-sm-1 control-label">库存：</label>
+            <label for="marketPrice" class="col-sm-1 control-label">定价：</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="storeMount" name="storeMount" placeholder="库存">
+                <input type="text" class="form-control" id="marketPrice" name="marketPrice" placeholder="请输入定价">
             </div>
             <span class="col-sm-2"></span>
         </div>
 
         <div class="form-group">
-            <label for="remark" class="col-sm-1 control-label">备注：</label>
+            <label for="storeMount" class="col-sm-1 control-label">库存：</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="remark" name="remark" placeholder="备注">
+                <input type="text" class="form-control" id="storeMount" name="storeMount" placeholder="库存">
             </div>
             <span class="col-sm-2"></span>
             <label for="productCategoryId" class="col-sm-1 control-label">分类：</label>
@@ -158,11 +164,15 @@
 
         <div class="form-group">
             <label for="pictureFile" class="col-sm-1 control-label">图片：</label>
-            <div class="col-sm-5">
+            <div class="col-sm-4">
                 <input type="file" id="pictureFile" name="pictureFile" onchange="changImg(event)">
                 图片预览:<img alt="暂无图片" id="myImg" src="" height="100px",width="100px">
             </div>
-            <span></span>
+            <span class="col-sm-2"></span>
+            <label for="remark" class="col-sm-1 control-label">备注：</label>
+            <div class="col-sm-4">
+                <textarea class="form-control" id="remark" name="remark" placeholder="备注"></textarea>
+            </div>
         </div>
 
         <div class="form-group">

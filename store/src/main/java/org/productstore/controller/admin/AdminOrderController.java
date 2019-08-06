@@ -80,7 +80,7 @@ public class AdminOrderController {
         String[] titles={buyer.getUsername()};
 
         String[][] headers =new String[][]{
-                {"序号", "商品名称", "单价", "数量","总价"}
+                {"序号", "商品编号","商品名称", "单价", "数量","总价"}
         };
 
         //List sheet = null;
@@ -91,6 +91,7 @@ public class AdminOrderController {
             OrderDetail orderDetail =orderCustom.getOrderDetails().get(i);
             String[] array ={String.valueOf(i+1),
                     orderDetail.getProductName() ,
+                    orderDetail.getProductNum() ,
                     String.valueOf(orderDetail.getUnitPrice()),
                     String.valueOf(orderDetail.getMount()),
                     String.valueOf(orderDetail.getTotalPrice())
@@ -148,7 +149,7 @@ public class AdminOrderController {
      * @return
      */
     @RequiresPermissions("order-edit")
-    @RequestMapping("/post/{orderId}")
+    @RequestMapping("/confirm/{orderId}")
     public String postOrder(@PathVariable("orderId") String orderId){
         BSResult bsResult =  orderService.postOrder(orderId);
         if (bsResult.getCode() == 200) {

@@ -14,133 +14,84 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bs.css"/>
+
+    <style type="text/css">
+        td {
+            max-width: 70px;
+            overflow: hidden;
+        }
+    </style>
 </head>
+
 <script type="text/javascript">
+ function  _edit(productId) {
+        if($("#edit_"+productId).val()=="确定"){
+            var goods={};
+            goods["storeMount"]=$(this).parents("tr").children("#storeMount_"+productId).children('input').val();
+            goods["dealMount"]=$(this).parents("tr").children("#dealMount_"+productId).children('input').val();
+            goods["badMount"]=$(this).parents("tr").children("#badMount_"+productId).children('input').val();
+            goods["inventRemark"]=$(this).parents("tr").children("#inventRemark_"+productId).children('input').val();
 
-    $(function (){
-        $('[data-toggle="popover"]').each(function () {
-            var element = $(this);
-            var buyerId = element.attr('value');
             $.ajax({
-                type:"GET",
-                url:"admin/order/buyer/"+buyerId,
-                success : function(result){
-                    if(result.code == 200){
-                        element.popover({
-                            trigger: 'manual',
-                            placement: 'right', //top, bottom, left or right
-                            title: "买家:"+result.data.username,
-                            html: 'true',
-                            content: "来自:"+result.data.location
-                        }).on("mouseenter", function () {
-                            var _this = this;
-                            $(this).popover("show");
-                            $(this).siblings(".popover").on("mouseleave", function () {
-                                $(_this).popover('hide');
-                            });
-                        }).on("mouseleave", function () {
-                            var _this = this;
-                            setTimeout(function () {
-                                if (!$(".popover:hover").length) {
-                                    $(_this).popover("hide")
-                                }
-                            }, 100);
-                        });
-                    }
-                },
-                dataType : "json"
+                type : "post",
+                url :"<%=path%>/invent/edit?productId="+productId,
+                data :goods,
+                dataType : "json",
+                success : function(res) {
+                    if(res=="success")
+                        alert("修改成功");
+                }
             });
+        }
 
+
+        str = $(this).val()=="编辑"?"确定":"编辑";
+        $(this).val(str);   // 按钮被点击后，在“编辑”和“确定”之间切换
+        $(this).parent().siblings("td").each(function() {  // 获取当前行的其他单元格
+            var obj_text = $(this).find("input:text");    // 判断单元格下是否有文本框
+            if(!obj_text.length)   // 如果没有文本框，则添加文本框使之可以编辑
+                $(this).html("<input type='text' value='"+$(this).text()+"'>");
+            else
+                $(this).html(obj_text.val());
         });
-    });
 
-    function deleteOrder(orderId) {
-        if (confirm("确认删除订单吗?")) {
-            location.href = "<%=basePath%>admin/order/deletion/" + orderId;
-        }
-    }
-    function lookShipping() {
-        alert("暂无物流信息!");
-    }
-
-    function postOrder(orderId) {
-        if (confirm("确认发货吗?")) {
-            location.href = "<%=basePath%>admin/order/post/" + orderId;
-        }
-    }
-    
-    function toEditOrder(orderId) {
-        location.href = "<%=basePath%>admin/order/toUpdate/" + orderId;
-    }
-
-    function downloadOrder(orderId){
-        location.href = "<%=basePath%>admin/order/download/" + orderId;
-    }
+    };
 
 </script>
 <body style="overflow: scroll;overflow-y:hidden">
 <div style="border: 1px solid #CCCCCC;padding-left:10px;">
-    <table class="table table-hover">
-        <caption>订单列表</caption>
+    <table class="table table-hover" id="content">
+        <caption>库存管理</caption>
         <thead>
         <tr>
             <th>序号</th>
             <th>商品编号</th>
             <th>商品名称</th>
+            <th>图片</th>
             <th>库存数量</th>
             <th>销售数量</th>
             <th>损坏数量</th>
+            <th>备注</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${orderCustoms.list}" var="orderCustom" varStatus="vs">
-            <tr>
-                <td>${vs.count}</td>
-                <td>${orderCustom.order.orderId}</td>
-                <td width="300px">
-                    <c:forEach items="${orderCustom.orderDetails}" var="orderDetail">
-                        <span>${orderDetail.mount}&nbsp;x</span>
-                        <a href="/info/${orderDetail.productId}" title="${orderDetail.productName}" target="_blank"><img src="${orderDetail.imageUrl}" width="20%"/></a>
-                    </c:forEach>
-                </td>
-                <td>${orderCustom.order.statusString}</td>
-                <td class="red">￥${orderCustom.order.payment}</td>
+        <c:forEach items="${productPageInfo.list}" var="product" varStatus="vs">
+            <tr onclick ="_edit(this)">
+                <td>${productPageInfo.startRow + vs.count-1}</td>
+                <td>${product.productNum}</td>
+                <td>${product.name}</td>
                 <td>
-                    <button type="button" class="btn btn-xs btn-info" onclick="toEditOrder('${orderCustom.order.orderId}')" >
-                        查看订单
-                    </button>
-                    <c:if test="${orderCustom.order.status == 0}">
-                        <button type="button" class="btn btn-xs btn-danger" onclick="deleteOrder('${orderCustom.order.orderId}')">
-                            取消订单
-                        </button>
-                    </c:if>
-                    <button type="button" id="buyerInfo" class="btn btn-xs btn-warning buyerInfo"
-                            data-container="body" data-toggle="popover"
-
-                            value="${orderCustom.order.userId}" <%--onclick="findBuyerInfo(${orderCustom.order.userId})"--%>>
-                        买家信息
-                    </button>
-                    <c:if test="${orderCustom.order.status != 0}">
-                        <!--
-                        <c:if test="${orderCustom.order.status < 3}">
-                            <button type="button" class="btn btn-xs btn-info" onclick="postOrder('${orderCustom.order.orderId}')" >
-                                发货
-                            </button>
-                        </c:if>
-                        -->
-                        <!--
-                        <button type="button" class="btn btn-xs btn-info" onclick="lookShipping()" >
-                            查看物流
-                        </button>
-                        -->
-                        <button type="button" class="btn btn-xs btn-danger" onclick="deleteOrder('${orderCustom.order.orderId}')">
-                            删除订单
-                        </button>
-                    </c:if>
-                    <button type="button" class="btn btn-xs btn-info" onclick="downloadOrder('${orderCustom.order.orderId}')" >
-                        下载订单
-                    </button>
+                    <img src="${product.imageUrl}" style="width: 50%">
+                </td>
+                <td id="storeMount_${product.productId}">${product.storeMount}</td>
+                <td id="dealMount_${product.productId}">${product.dealMount}</td>
+                <td id="badMount_${product.productId}">${product.badMount}</td>
+                <td id="inventRemark_${product.productId}">${product.inventRemark}</td>
+                <td style="width: 100px">
+                    <input type="button" class="btn btn-xs btn-info" id="edit_${product.productId}" onclick ="_edit('${product.productId}')">
+                        <span class="glyphicon glyphicon-pencil"></span> 编辑
+                    </input>
                 </td>
             </tr>
         </c:forEach>
@@ -148,42 +99,42 @@
     </table>
     <ul class="pagination pagination-lg">
 
-        <c:if test="${orderCustoms.isFirstPage}">
+        <c:if test="${productPageInfo.isFirstPage}">
             <li class="disabled"><a href="javascript:void(0);">&laquo;</a></li>
         </c:if>
 
-        <c:if test="${orderCustoms.isFirstPage}">
+        <c:if test="${!productPageInfo.isFirstPage}">
             <li>
-                <a href="admin/order/list?page=${orderCustoms.prePage}">&laquo;</a>
+                <a href="admin/product/invent?keywords=${keywords}&page=${productPageInfo.prePage}">&laquo;</a>
             </li>
         </c:if>
         <c:forEach
-                begin="${orderCustoms.pageNum < 6 ? 1 :orderCustoms.pageNum-5}"
-                end="${orderCustoms.pages<6?orderCustoms.pages:(orderCustoms.pageNum < 6 ? 6 :orderCustoms.pageNum) }"
+                begin="${productPageInfo.pageNum < 6 ? 1 :productPageInfo.pageNum-5}"
+                end="${productPageInfo.pages<6?productPageInfo.pages:(productPageInfo.pageNum < 6 ? 6 :productPageInfo.pageNum) }"
                 var="current">
             <li
-                    class="${(current == orderCustoms.pageNum) ? 'active':''}">
-                <a href="admin/order/list?page=${current}">
+                    class="${(current == productPageInfo.pageNum) ? 'active':''}">
+                <a href="admin/product/invent?keywords=${keywords}&page=${current}">
                         ${current}
                 </a>
             </li>
         </c:forEach>
 
-        <c:if test="${orderCustoms.isLastPage}">
+        <c:if test="${productPageInfo.isLastPage}">
             <li class="disabled"><a href="javascript:void(0);">&raquo;</a></li>
         </c:if>
 
-        <c:if test="${!orderCustoms.isLastPage}">
-            <li><a href="admin/order/list?page=${orderCustoms.nextPage}">&raquo;</a>
+        <c:if test="${!productPageInfo.isLastPage}">
+            <li><a href="admin/product/invent?keywords=${keywords}&page=${productPageInfo.nextPage}">&raquo;</a>
             </li>
         </c:if>
 
         <li>
-            <a href="admin/order/list?page=${orderCustoms.pages}">末页</a>
+            <a href="admin/product/invent?keywords=${keywords}&page=${productPageInfo.pages}">末页</a>
         </li>
 
-        <li><a href="javascript:void(0);">共${orderCustoms.pages}页</a></li>
-        <li><a href="javascript:void(0);">共${orderCustoms.total}种</a></li>
+        <li><a href="javascript:void(0);">共${productPageInfo.pages}页</a></li>
+        <li><a href="javascript:void(0);">共${productPageInfo.total}种</a></li>
     </ul>
 </div>
 

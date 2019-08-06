@@ -39,31 +39,6 @@ public class ProductParse {
             String productMarketPrice = element.select("p[class=price]").select("span[class=search_pre_price]").text().substring(1);
             String discount = element.select("p[class=price]").select("span[class=search_discount]").text();
 
-            String productPackage = "";
-            String catalog = "";
-            /**
-             * 爬取商品详情页的信息
-             */
-
-            String bookInfoUrl = element.select("a[class=pic]").attr("href");
-            HttpResponse response = HttpUtil.getHtml(httpclient, bookInfoUrl);
-            int statusCode = response.getStatusLine().getStatusCode();   //获取状态码
-            if (statusCode == 200) {
-                String entity = EntityUtils.toString(response.getEntity(), "utf-8");
-                Document bookInfoDoc = Jsoup.parse(entity);
-                Elements bookDetailDesc = bookInfoDoc.select("#detail_all");
-
-
-                Elements keys = bookDetailDesc.select("ul[class=key clearfix]").select("li");
-
-                productPackage = keys.get(2).text();
-                productPackage = productPackage.substring(productPackage.indexOf("：") + 1);
-
-                Elements select = bookDetailDesc.select("#detail").select("#catalog-show");
-
-                catalog = select.text();
-            }
-
             ProductInfo product = new ProductInfo();
             product.setName(productName);
             product.setImageUrl(imgUrl);
@@ -79,8 +54,6 @@ public class ProductParse {
             );
             product.setPrice(BigDecimal.valueOf(Double.valueOf(productRobPrice)));
             product.setMarketPrice(BigDecimal.valueOf(Double.valueOf(productMarketPrice)));
-            product.setPackStyle(productPackage);
-            product.setCatalog(catalog);
             product.setDetail(detail);
             product.setStoreId(1);
             product.setStoreTime(new Date());

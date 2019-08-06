@@ -107,7 +107,7 @@
                                 <img src="${productInfo.imageUrl}"/>
                             </a>
                             <p class="name">
-                                <a href="product/info/${productInfo.productId}">${productInfo.name}</a>
+                                <a href="product/info/${productInfo.productId}">${productInfo.name}|${productInfo.remark}</a>
                             </p>
                             <p class="author">${productInfo.storeName}</p>
                             <p class="price">

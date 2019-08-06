@@ -64,6 +64,9 @@ public class OrderDetail {
     @Column(name = "product_name")
     private String productName;
 
+    @Column(name = "product_num")
+    private String productNum;
+
     /**
      * @return order_detail_id
      */
@@ -256,5 +259,13 @@ public class OrderDetail {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getProductNum() {
+        return productNum;
+    }
+
+    public void setProductNum(String productNum) {
+        this.productNum = productNum;
     }
 }

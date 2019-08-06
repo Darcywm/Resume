@@ -196,7 +196,7 @@
                                                 <a href="admin/report/sales" target="centerFrame">销售量</a>
                                             </li>
                                             <li>
-                                                <a href="admin/report/invent" target="centerFrame">库存</a>
+                                                <a href="admin/product/invent" target="centerFrame">库存</a>
                                             </li>
                                         </ul>
                                     </div>

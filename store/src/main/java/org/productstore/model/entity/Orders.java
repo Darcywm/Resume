@@ -106,6 +106,11 @@ public class Orders {
     private Integer buyerRate;
 
     /**
+     * 支付状态 0未支付 1已支付
+     */
+    @Column(name = "confirm_status")
+    private Integer confirmStatus;
+    /**
      * 获取订单id
      *
      * @return order_id - 订单id
@@ -411,5 +416,22 @@ public class Orders {
      */
     public void setBuyerRate(Integer buyerRate) {
         this.buyerRate = buyerRate;
+    }
+
+    public Integer getConfirmStatus() {
+        return confirmStatus;
+    }
+
+    public String getConfirmStatusString(){
+        if(confirmStatus == 0){
+            return "未付款";
+        }else if(confirmStatus == 1){
+            return "确认已付款";
+        }else{
+            return "交易关闭";
+        }
+    }
+    public void setConfirmStatus(Integer confirmStatus) {
+        this.confirmStatus = confirmStatus;
     }
 }
