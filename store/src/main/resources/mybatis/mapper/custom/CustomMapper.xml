@@ -26,6 +26,7 @@
       <result column="shipping_code" jdbcType="VARCHAR" property="shippingCode" />
       <result column="buyer_message" jdbcType="VARCHAR" property="buyerMessage" />
       <result column="buyer_rate" jdbcType="INTEGER" property="buyerRate" />
+      <result column="store_id" jdbcType="INTEGER" property="storeId" />
       <result column="confirm_status" jdbcType="INTEGER" property="confirmStatus" />
     </association>
 
@@ -165,6 +166,38 @@
       INNER JOIN `order_detail` od ON o.order_id = od.order_id AND od.store_id = #{storeId}
 
   </select>
+
+  <select id="findOrdersByStoreIdandConfirmStatus" parameterType="hashmap" resultMap="ordersResultMap">
+
+    SELECT
+      o.order_id,
+      o.user_id,
+      o.payment,
+      o.payment_type,
+      o.status,
+      o.post_fee,
+      o.create_time,
+      o.update_time,
+      o.order_mount,
+      o.payment_time,
+      o.end_time,
+      o.close_time,
+      o.shipping_name,
+      o.shipping_code,
+      o.buyer_message,
+      o.buyer_rate,
+      o.confirm_status
+    FROM  orders o
+    WHERE  o.store_id = ${storeId} and o.confirm_status = ${confirmStatus}
+      <if test="sDate != null and sDate != ''">
+          AND  DATE_FORMAT(o.create_time,'%Y%m%d') >= ${sDate}
+      </if>
+      <if test="eDate != null and eDate != ''">
+          AND  DATE_FORMAT(o.create_time,'%Y%m%d') &lt;= ${eDate}
+      </if>
+
+  </select>
+
 
   <!--用户所属角色查询-->
   <select id="findRolesByUserId" parameterType="int" resultType="org.productstore.model.entity.Role">

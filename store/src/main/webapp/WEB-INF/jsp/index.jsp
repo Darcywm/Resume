@@ -101,7 +101,7 @@
             </div>
             <div class="product_div">
                 <ul class="product_ul">
-                    <c:forEach items="${productInfos}"  var="productInfo">
+                    <c:forEach items="${productPageInfo.list}"  var="productInfo">
                         <li class="product_li">
                             <a href="product/info/${productInfo.productId}" class="img" target="_blank">
                                 <img src="${productInfo.imageUrl}"/>
@@ -118,6 +118,45 @@
                     </c:forEach>
                 </ul>
             </div>
+            <ul class="pagination pagination-lg">
+
+                <c:if test="${productPageInfo.isFirstPage}">
+                    <li class="disabled"><a href="javascript:void(0);">&laquo;</a></li>
+                </c:if>
+
+                <c:if test="${!productPageInfo.isFirstPage}">
+                    <li>
+                        <a href="admin/product/list?keywords=${keywords}&page=${productPageInfo.prePage}">&laquo;</a>
+                    </li>
+                </c:if>
+                <c:forEach
+                        begin="${productPageInfo.pageNum < 6 ? 1 :productPageInfo.pageNum-5}"
+                        end="${productPageInfo.pages<6?productPageInfo.pages:(productPageInfo.pageNum < 6 ? 6 :productPageInfo.pageNum) }"
+                        var="current">
+                    <li
+                            class="${(current == productPageInfo.pageNum) ? 'active':''}">
+                        <a href="admin/product/list?keywords=${keywords}&page=${current}">
+                                ${current}
+                        </a>
+                    </li>
+                </c:forEach>
+
+                <c:if test="${productPageInfo.isLastPage}">
+                    <li class="disabled"><a href="javascript:void(0);">&raquo;</a></li>
+                </c:if>
+
+                <c:if test="${!productPageInfo.isLastPage}">
+                    <li><a href="admin/product/list?keywords=${keywords}&page=${productPageInfo.nextPage}">&raquo;</a>
+                    </li>
+                </c:if>
+
+                <li>
+                    <a href="admin/product/list?keywords=${keywords}&page=${productPageInfo.pages}">末页</a>
+                </li>
+
+                <li><a href="javascript:void(0);">共${productPageInfo.pages}页</a></li>
+                <li><a href="javascript:void(0);">共${productPageInfo.total}种</a></li>
+            </ul>
         </div>
     </div>
 </div>

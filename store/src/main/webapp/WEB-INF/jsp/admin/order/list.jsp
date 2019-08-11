@@ -14,6 +14,11 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bs.css"/>
+    <style type="text/css">
+        #searchBook {
+            padding-top: 30px;
+        }
+    </style>
 </head>
 <script type="text/javascript">
 
@@ -59,13 +64,16 @@
             location.href = "<%=basePath%>admin/order/deletion/" + orderId;
         }
     }
-    function lookShipping() {
-        alert("暂无物流信息!");
-    }
 
     function confirmOrder(orderId) {
         if (confirm("确认已付款吗?")) {
             location.href = "<%=basePath%>admin/order/confirm/" + orderId;
+        }
+    }
+
+    function postOrder(orderId) {
+        if (confirm("确认发货吗?")) {
+            location.href = "<%=basePath%>admin/order/post/" + orderId;
         }
     }
     
@@ -80,6 +88,24 @@
 </script>
 <body style="overflow: scroll;overflow-y:hidden">
 <div style="border: 1px solid #CCCCCC;padding-left:10px;">
+    <div id="searchBook" style="height:100px;border-bottom: 1px solid #CCCCCC;">
+        <form action="admin/order/accounts" class="form-inline" role="form" method="get">
+            <div class="form-group">
+
+                <input type="text" class="form-control" id="name" name="name" value="">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="sDate" name="sDate" value="${sDate}" placeholder="开始日期">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="eDate" name="eDate" value="${eDate}" placeholder="结束日期">
+            </div>
+            <button type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span> 订单搜索
+            </button>
+        </form>
+        <p></p>
+    </div>
 
     <table class="table table-hover">
         <caption>订单列表</caption>
@@ -125,6 +151,11 @@
                         <c:if test="${orderCustom.order.confirmStatus == 0}">
                             <button type="button" class="btn btn-xs btn-info" onclick="confirmOrder('${orderCustom.order.orderId}')" >
                                 确认付款
+                            </button>
+                        </c:if>
+                        <c:if test="${orderCustom.order.status < 3}">
+                            <button type="button" class="btn btn-xs btn-info" onclick="postOrder('${orderCustom.order.orderId}')" >
+                                发货
                             </button>
                         </c:if>
                         <button type="button" class="btn btn-xs btn-danger" onclick="deleteOrder('${orderCustom.order.orderId}')">

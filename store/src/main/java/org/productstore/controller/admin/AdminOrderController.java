@@ -41,7 +41,7 @@ public class AdminOrderController {
 
         Store loginStore = (Store) request.getSession().getAttribute("loginStore");
 
-        PageInfo<OrderCustom> orderCustoms = orderService.findOrdersByCondition(0,5,loginStore.getStoreId());
+        PageInfo<OrderCustom> orderCustoms = orderService.findOrdersByCondition(page,5,loginStore.getStoreId());
 
         request.setAttribute("orderCustoms", orderCustoms);
 
@@ -149,9 +149,24 @@ public class AdminOrderController {
      * @return
      */
     @RequiresPermissions("order-edit")
-    @RequestMapping("/confirm/{orderId}")
+    @RequestMapping("/post/{orderId}")
     public String postOrder(@PathVariable("orderId") String orderId){
         BSResult bsResult =  orderService.postOrder(orderId);
+        if (bsResult.getCode() == 200) {
+            return "redirect:/admin/order/list";
+        }
+        return "exception";
+    }
+
+    /**
+     * 确认付款
+     * @param orderId
+     * @return
+     */
+    @RequiresPermissions("order-edit")
+    @RequestMapping("/confirm/{orderId}")
+    public String confirmOrder(@PathVariable("orderId") String orderId){
+        BSResult bsResult =  orderService.confirmOrder(orderId);
         if (bsResult.getCode() == 200) {
             return "redirect:/admin/order/list";
         }
@@ -170,5 +185,53 @@ public class AdminOrderController {
     public BSResult buyerInfo(@PathVariable("userId") Integer userId,Model model){
         User buyer = userService.findById(userId);
         return BSResultUtil.success(buyer);
+    }
+
+    @RequestMapping("/accounts")
+    @RequiresPermissions("order-list")
+    public String accountsList(@RequestParam(value = "page",defaultValue = "1",required = false) int page,
+                               @RequestParam(value = "confirmStatus",defaultValue ="1",required = false) int confirmStatus,
+                               @RequestParam(value = "sDate",required = false) String sDate,
+                               @RequestParam(value = "eDate",required = false) String eDate,
+                               HttpServletRequest request, Model model){
+
+        Store loginStore = (Store) request.getSession().getAttribute("loginStore");
+
+        PageInfo<OrderCustom> orderCustomsPay = orderService.findOrdersBySomeCondition(0,5,loginStore.getStoreId(),1,sDate,eDate);
+
+        PageInfo<OrderCustom> orderCustomsNoPay = orderService.findOrdersBySomeCondition(0,5,loginStore.getStoreId(),0,sDate,eDate);
+
+        double sumPay = 0.00;
+        double sumNoPay = 0.00;
+        if(orderCustomsPay!= null ){
+            List<OrderCustom> orderCustomList = orderCustomsPay.getList();
+            if(orderCustomList != null && orderCustomList.size() > 0){
+                for(int i = 0 ; i< orderCustomList.size(); i++){
+                    Orders order = orderCustomList.get(i).getOrder();
+                    sumPay += Double.parseDouble(order.getPayment());
+            }
+            }
+        }
+        if(orderCustomsNoPay!= null ){
+            List<OrderCustom> orderCustomList = orderCustomsNoPay.getList();
+            if(orderCustomList != null && orderCustomList.size() > 0){
+                for(int i = 0 ; i< orderCustomList.size(); i++){
+                    Orders order = orderCustomList.get(i).getOrder();
+                    sumNoPay += Double.parseDouble(order.getPayment());
+                }
+            }
+        }
+       if(confirmStatus==1){
+           request.setAttribute("orderCustoms", orderCustomsPay);
+       }else{
+           request.setAttribute("orderCustoms", orderCustomsNoPay);
+       }
+        model.addAttribute("confirmStatus", confirmStatus);
+        model.addAttribute("sDate", sDate);
+        model.addAttribute("eDate", eDate);
+        model.addAttribute("sumPay", sumPay);
+        model.addAttribute("sumNoPay", sumNoPay);
+
+        return "admin/report/accounts";
     }
 }

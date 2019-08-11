@@ -17,6 +17,8 @@ public interface IOrderService {
 
     PageInfo<OrderCustom> findOrdersByCondition(int page, int pageSize, int storeId);
 
+    PageInfo<OrderCustom> findOrdersBySomeCondition(int page, int pageSize,int storeId,int confirmStatus,String sDate,String eDate);
+
     BSResult createOrder(Cart cart, User user, String express, int payMethod);
 
     BSResult findOrderById(String orderId);
@@ -26,6 +28,8 @@ public interface IOrderService {
     void updateOrderAfterPay(PayContext payContext);
 
     BSResult postOrder(String orderId);
+
+    BSResult confirmOrder(String orderId);
 
     OrderCustom findOrderCustomById(String orderId);
 

@@ -67,7 +67,7 @@ public class ProductInfoServiceImpl implements IProductInfoService {
 
     @Override
     @Cacheable(cacheNames="book",key = "'bookInfo_'+#cateId+'_'+#currentPage+#pageSize")
-    public List<ProductInfo> findAllProductList(int currentPage, int pageSize) {
+    public PageInfo<ProductInfo> findAllProductList(int currentPage, int pageSize) {
         //设置分页信息，当前页，每页显示多少
         PageHelper.startPage(currentPage, pageSize);
         Example bookInfoExample = new Example(ProductInfo.class);
@@ -80,7 +80,7 @@ public class ProductInfoServiceImpl implements IProductInfoService {
             products.get(i).setStoreName(storeMapper.selectByPrimaryKey(products.get(i).getStoreId()).getStoreName());
         }
         PageInfo<ProductInfo> pageInfo = new PageInfo<>(products);
-        return pageInfo.getList();
+        return pageInfo;
     }
 
     @Override

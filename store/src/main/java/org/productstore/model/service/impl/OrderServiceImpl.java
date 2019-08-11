@@ -77,6 +77,21 @@ public class OrderServiceImpl implements IOrderService {
 
     }
 
+    @Override
+    public PageInfo<OrderCustom> findOrdersBySomeCondition(int page, int pageSize,int storeId,int confirmStatus,String sDate,String eDate){
+        PageHelper.startPage(page, pageSize);
+        HashMap map =new HashMap();
+        map.put("storeId",storeId);
+        map.put("confirmStatus",confirmStatus);
+        map.put("sDate",sDate);
+        map.put("eDate",eDate);
+
+        List<OrderCustom> orderCustoms = customMapper.findOrdersByStoreIdandConfirmStatus(map);
+
+        PageInfo<OrderCustom> pageInfo = new PageInfo<>(orderCustoms);
+        return pageInfo;
+    }
+
     /**
      * 创建订单
      *
@@ -225,11 +240,9 @@ public class OrderServiceImpl implements IOrderService {
         orders.setOrderId(orderId);
         try {
             orders.setStatus(POSTED);
-            orders.setConfirmStatus(COMPLETED);
             orderMapper.updateByPrimaryKeySelective(orders);
         } catch (Exception e) {
             orders.setStatus(NOT_POST);
-            orders.setConfirmStatus(NOT_COMPLETED);
             orderMapper.updateByPrimaryKeySelective(orders);
             e.printStackTrace();
             return BSResultUtil.build(500, "确认失败");
@@ -237,6 +250,21 @@ public class OrderServiceImpl implements IOrderService {
         return BSResultUtil.success();
     }
 
+    @Override
+    public BSResult confirmOrder(String orderId) {
+        Orders orders = new Orders();
+        orders.setOrderId(orderId);
+        try {
+            orders.setConfirmStatus(COMPLETED);
+            orderMapper.updateByPrimaryKeySelective(orders);
+        } catch (Exception e) {
+            orders.setConfirmStatus(NOT_COMPLETED);
+            orderMapper.updateByPrimaryKeySelective(orders);
+            e.printStackTrace();
+            return BSResultUtil.build(500, "确认失败");
+        }
+        return BSResultUtil.success();
+    }
     @Override
     public OrderCustom findOrderCustomById(String orderId) {
         OrderCustom orderCustom = new OrderCustom();

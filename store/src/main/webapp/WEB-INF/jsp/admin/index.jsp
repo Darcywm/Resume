@@ -62,8 +62,8 @@
     <div class="row" style="height: 800px;">
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 sort" style="width: 17.5%;height: 100%;padding: 0;">
             <ul id="sort_ul">
-                <li class="sort_li">
-                    <shiro:hasPermission name="user-list">
+                <shiro:hasPermission name="user-list">
+                    <li class="sort_li">
                         <div class="panel panel-default left-menu-main-list">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -86,10 +86,10 @@
                                 </div>
                             </div>
                         </div>
-                    </shiro:hasPermission>
-                </li>
-                <li class="sort_li">
-                    <shiro:hasAnyRoles name="admin,store-manager">
+                    </li>
+                </shiro:hasPermission>
+                <shiro:hasAnyRoles name="admin,store-manager">
+                    <li class="sort_li">
                         <div class="panel panel-default left-menu-main-list">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -112,8 +112,8 @@
                                 </div>
                             </div>
                         </div>
-                    </shiro:hasAnyRoles>
-                </li>
+                    </li>
+                </shiro:hasAnyRoles>
                 <li class="sort_li">
                     <shiro:hasPermission name="privilege-manage">
                         <div class="panel panel-default left-menu-main-list">
@@ -197,6 +197,9 @@
                                             </li>
                                             <li>
                                                 <a href="admin/product/invent" target="centerFrame">库存</a>
+                                            </li>
+                                            <li>
+                                                <a href="admin/order/accounts" target="centerFrame">账本</a>
                                             </li>
                                         </ul>
                                     </div>

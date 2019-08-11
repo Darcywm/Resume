@@ -1,6 +1,7 @@
 package org.productstore.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import org.productstore.crawl.WriteToMysql;
 import org.productstore.model.entity.Store;
 import org.productstore.model.service.IProductCateService;
@@ -18,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -52,15 +54,13 @@ public class IndexController {
      * @return
      */
     @RequestMapping({"", "/", "/index"})
-    public String index(Model model) {
-//        if(categoryList == null){
-//            categoryList = cateService.getCategoryList();
-//        }
+    public String index( @RequestParam(defaultValue = "1", required = false) int page,
+                         @RequestParam(defaultValue = "15", required = false) int pageSize,Model model) {
+
         //获得商品列表
-        List<ProductInfo> productInfos = productInfoService.findAllProductList(new Random().nextInt(3), 18);
+        PageInfo<ProductInfo> productPageInfo = productInfoService.findAllProductList(page, pageSize);
 
-
-        model.addAttribute("productInfos", productInfos);
+        model.addAttribute("productPageInfo", productPageInfo);
 
         //获得店铺列表
         List<Store> stores = storeService.findStores();

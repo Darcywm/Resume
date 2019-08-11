@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface IProductInfoService {
 
-    List<ProductInfo> findAllProductList(int currentPage, int pageSize);
+    PageInfo<ProductInfo> findAllProductList(int currentPage, int pageSize);
 
     List<ProductInfo> findProductListByCateId(int cateId, int currentPage, int pageSize);
 
